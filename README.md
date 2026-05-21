@@ -13,7 +13,7 @@ that setting changes or these files are mirrored to another static host, use thi
 direct install URL:
 
 ```text
-itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/main/manifest.plist
+itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/dep-stage-14.6.1-900723/manifest.plist
 ```
 
 First-time enterprise installs require testers to trust `Healthline Networks, Inc.`
