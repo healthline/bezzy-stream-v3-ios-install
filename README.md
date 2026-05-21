@@ -11,7 +11,7 @@ identifier changed.
 The install URL is:
 
 ```text
-https://healthline.github.io/bezzy-stream-v3-ios-install/
+https://crispy-couscous-5v16wr3.pages.github.io/
 ```
 
 First-time enterprise installs require testers to trust `Healthline Networks, Inc.`
