@@ -11,7 +11,7 @@
           <key>kind</key>
           <string>software-package</string>
           <key>url</key>
-          <string>https://crispy-couscous-5v16wr3.pages.github.io/dep-release.ipa</string>
+          <string>https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/main/dep-release.ipa</string>
         </dict>
         <dict>
           <key>kind</key>
@@ -19,7 +19,7 @@
           <key>needs-shine</key>
           <false/>
           <key>url</key>
-          <string>https://crispy-couscous-5v16wr3.pages.github.io/display-image.png</string>
+          <string>https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/main/display-image.png</string>
         </dict>
         <dict>
           <key>kind</key>
@@ -27,7 +27,7 @@
           <key>needs-shine</key>
           <false/>
           <key>url</key>
-          <string>https://crispy-couscous-5v16wr3.pages.github.io/full-size-image.png</string>
+          <string>https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/main/full-size-image.png</string>
         </dict>
       </array>
       <key>metadata</key>
