@@ -1,0 +1,15 @@
+/manifest.plist
+  Content-Type: application/xml
+  Cache-Control: no-cache
+
+/dep-release.ipa
+  Content-Type: application/octet-stream
+  Cache-Control: public, max-age=300
+
+/display-image.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=300
+
+/full-size-image.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=300

@@ -11,7 +11,7 @@
           <key>kind</key>
           <string>software-package</string>
           <key>url</key>
-          <string>https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/dep-stage-14.6.1-900723/dep-release.ipa</string>
+          <string>https://bezzy-stream-v3-ios-install.netlify.app/dep-release.ipa</string>
         </dict>
         <dict>
           <key>kind</key>
@@ -19,7 +19,7 @@
           <key>needs-shine</key>
           <false/>
           <key>url</key>
-          <string>https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/dep-stage-14.6.1-900723/display-image.png</string>
+          <string>https://bezzy-stream-v3-ios-install.netlify.app/display-image.png</string>
         </dict>
         <dict>
           <key>kind</key>
@@ -27,7 +27,7 @@
           <key>needs-shine</key>
           <false/>
           <key>url</key>
-          <string>https://raw.githubusercontent.com/healthline/bezzy-stream-v3-ios-install/dep-stage-14.6.1-900723/full-size-image.png</string>
+          <string>https://bezzy-stream-v3-ios-install.netlify.app/full-size-image.png</string>
         </dict>
       </array>
       <key>metadata</key>
