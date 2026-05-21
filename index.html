@@ -131,8 +131,24 @@
         color: var(--text);
       }
 
+      .instructions {
+        margin-top: 22px;
+        border-top: 1px solid var(--border);
+        padding-top: 18px;
+      }
+
+      .instructions summary {
+        cursor: pointer;
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .instructions summary::marker {
+        color: var(--accent);
+      }
+
       .steps {
-        margin: 28px 0 0;
+        margin: 18px 0 0;
         padding-left: 20px;
       }
 
@@ -140,18 +156,16 @@
         margin-top: 10px;
       }
 
-      .details {
-        margin-top: 24px;
-        border-top: 1px solid var(--border);
-        padding-top: 20px;
+      .instruction-notes {
+        margin-top: 18px;
         color: var(--muted);
       }
 
-      .details p {
+      .instruction-notes p {
         margin: 0;
       }
 
-      .details p + p {
+      .instruction-notes p + p {
         margin-top: 10px;
       }
 
@@ -202,21 +216,24 @@
           </a>
         </div>
 
-        <ol class="steps">
-          <li>Open this page in Safari on an iPhone or iPad.</li>
-          <li>Tap Install Bezzy Depression and confirm the install prompt.</li>
-          <li>After the app finishes installing, open Bezzy Depression from the Home Screen.</li>
-          <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
-          <li>Go to General, then VPN &amp; Device Management.</li>
-          <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
-          <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Depression.</li>
-          <li>This build is for authorized internal testing only.</li>
-        </ol>
+        <details class="instructions">
+          <summary>Installation instructions</summary>
+          <ol class="steps">
+            <li>Open this page in Safari on an iPhone or iPad.</li>
+            <li>Tap Install Bezzy Depression and confirm the install prompt.</li>
+            <li>After the app finishes installing, open Bezzy Depression from the Home Screen.</li>
+            <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
+            <li>Go to General, then VPN &amp; Device Management.</li>
+            <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
+            <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Depression.</li>
+            <li>This build is for authorized internal testing only.</li>
+          </ol>
 
-        <div class="details">
-          <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
-          <p>iOS does not allow an OTA-installed app to open automatically. Use Open Bezzy Depression after installation and trust are complete.</p>
-        </div>
+          <div class="instruction-notes">
+            <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
+            <p>iOS does not allow an OTA-installed app to open automatically. Use Open Bezzy Depression after installation and trust are complete.</p>
+          </div>
+        </details>
       </section>
     </main>
     <script>
