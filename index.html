@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DEP Stage iOS Install</title>
+    <title>Bezzy Depression iOS Install</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -76,6 +76,34 @@
         font-size: 1rem;
       }
 
+      .build-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-top: 24px;
+        padding: 18px 0 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .build-detail {
+        display: grid;
+        gap: 2px;
+      }
+
+      .build-detail span {
+        color: var(--muted);
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .build-detail strong,
+      .build-detail time {
+        color: var(--text);
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
       .install {
         display: inline-flex;
         align-items: center;
@@ -138,9 +166,27 @@
         <div class="app-header">
           <img class="app-icon" src="./display-image.png" alt="" />
           <div>
-            <h1 id="page-title">DEP Stage</h1>
+            <h1 id="page-title">Bezzy Depression</h1>
+            <p class="meta">Stage iOS build</p>
             <p class="meta">Version 14.6.1 (900723)</p>
             <p class="meta"><code>com.healthline.dep-stage</code></p>
+          </div>
+        </div>
+
+        <div class="build-summary" aria-label="Build details">
+          <div class="build-detail">
+            <span>Last update</span>
+            <time
+              id="last-updated"
+              datetime="2026-05-21T22:30:10Z"
+              data-last-updated-at="2026-05-21T22:30:10Z"
+            >
+              May 21, 2026
+            </time>
+          </div>
+          <div class="build-detail">
+            <span>Environment</span>
+            <strong>Stage</strong>
           </div>
         </div>
 
@@ -149,29 +195,93 @@
             class="install"
             href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-ios-install.netlify.app/manifest.plist"
           >
-            Install DEP Stage
+            Install Bezzy Depression
           </a>
           <a class="install secondary" href="dephealthline://">
-            Open DEP Stage
+            Open Bezzy Depression
           </a>
         </div>
 
         <ol class="steps">
           <li>Open this page in Safari on an iPhone or iPad.</li>
-          <li>Tap Install DEP Stage and confirm the install prompt.</li>
-          <li>After the app finishes installing, open DEP Stage from the Home Screen.</li>
+          <li>Tap Install Bezzy Depression and confirm the install prompt.</li>
+          <li>After the app finishes installing, open Bezzy Depression from the Home Screen.</li>
           <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
           <li>Go to General, then VPN &amp; Device Management.</li>
           <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
-          <li>Tap Trust Healthline Networks, Inc., then return to DEP Stage.</li>
+          <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Depression.</li>
           <li>This build is for authorized internal testing only.</li>
         </ol>
 
         <div class="details">
           <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
-          <p>iOS does not allow an OTA-installed app to open automatically. Use Open DEP Stage after installation and trust are complete.</p>
+          <p>iOS does not allow an OTA-installed app to open automatically. Use Open Bezzy Depression after installation and trust are complete.</p>
         </div>
       </section>
     </main>
+    <script>
+      const lastUpdatedElement = document.getElementById("last-updated");
+      const lastUpdatedAt = new Date(lastUpdatedElement.dataset.lastUpdatedAt);
+
+      const numberWords = {
+        1: "one",
+        2: "two",
+        3: "three",
+        4: "four",
+        5: "five",
+        6: "six",
+        7: "seven",
+        8: "eight",
+        9: "nine",
+        10: "ten",
+        11: "eleven",
+        12: "twelve",
+      };
+
+      function countLabel(value) {
+        return numberWords[value] || String(value);
+      }
+
+      function isYesterday(date, now) {
+        const yesterday = new Date(now);
+        yesterday.setDate(now.getDate() - 1);
+        return date.toDateString() === yesterday.toDateString();
+      }
+
+      function formatLastUpdated(date, now = new Date()) {
+        const diffMs = now.getTime() - date.getTime();
+        const elapsedMs = Math.max(0, diffMs);
+        const minuteMs = 60 * 1000;
+        const hourMs = 60 * minuteMs;
+
+        if (elapsedMs < 45 * 1000) return "just now";
+        if (elapsedMs < 90 * 1000) return "one minute ago";
+        if (elapsedMs < hourMs) {
+          const minutes = Math.round(elapsedMs / minuteMs);
+          return `${countLabel(minutes)} minutes ago`;
+        }
+        if (elapsedMs < 90 * minuteMs) return "one hour ago";
+        if (elapsedMs < 24 * hourMs) {
+          const hours = Math.round(elapsedMs / hourMs);
+          return `${countLabel(hours)} hours ago`;
+        }
+        if (isYesterday(date, now)) return "yesterday";
+
+        return date.toLocaleDateString(undefined, {
+          month: "short",
+          day: "numeric",
+          year: date.getFullYear() === now.getFullYear() ? undefined : "numeric",
+        });
+      }
+
+      function renderLastUpdated() {
+        lastUpdatedElement.textContent = formatLastUpdated(lastUpdatedAt);
+        lastUpdatedElement.title = lastUpdatedAt.toLocaleString();
+      }
+
+      lastUpdatedElement.dateTime = lastUpdatedAt.toISOString();
+      renderLastUpdated();
+      window.setInterval(renderLastUpdated, 30 * 1000);
+    </script>
   </body>
 </html>
