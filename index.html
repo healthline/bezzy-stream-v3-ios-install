@@ -81,7 +81,6 @@
         align-items: center;
         justify-content: center;
         min-height: 52px;
-        margin-top: 28px;
         padding: 0 24px;
         border-radius: 8px;
         background: var(--accent);
@@ -91,13 +90,40 @@
         text-decoration: none;
       }
 
-      .notes {
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .secondary {
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text);
+      }
+
+      .steps {
         margin: 28px 0 0;
         padding-left: 20px;
+      }
+
+      .steps li + li {
+        margin-top: 10px;
+      }
+
+      .details {
+        margin-top: 24px;
+        border-top: 1px solid var(--border);
+        padding-top: 20px;
         color: var(--muted);
       }
 
-      .notes li + li {
+      .details p {
+        margin: 0;
+      }
+
+      .details p + p {
         margin-top: 10px;
       }
 
@@ -118,18 +144,33 @@
           </div>
         </div>
 
-        <a
-          class="install"
-          href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-ios-install.netlify.app/manifest.plist"
-        >
-          Install DEP Stage
-        </a>
+        <div class="actions">
+          <a
+            class="install"
+            href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-ios-install.netlify.app/manifest.plist"
+          >
+            Install DEP Stage
+          </a>
+          <a class="install secondary" href="dephealthline://">
+            Open DEP Stage
+          </a>
+        </div>
 
-        <ul class="notes">
+        <ol class="steps">
           <li>Open this page in Safari on an iPhone or iPad.</li>
-          <li>First-time enterprise installs require trusting Healthline Networks, Inc. in iOS Settings.</li>
+          <li>Tap Install DEP Stage and confirm the install prompt.</li>
+          <li>After the app finishes installing, open DEP Stage from the Home Screen.</li>
+          <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
+          <li>Go to General, then VPN &amp; Device Management.</li>
+          <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
+          <li>Tap Trust Healthline Networks, Inc., then return to DEP Stage.</li>
           <li>This build is for authorized internal testing only.</li>
-        </ul>
+        </ol>
+
+        <div class="details">
+          <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
+          <p>iOS does not allow an OTA-installed app to open automatically. Use Open DEP Stage after installation and trust are complete.</p>
+        </div>
       </section>
     </main>
   </body>

@@ -21,4 +21,11 @@ itms-services://?action=download-manifest&url=https://bezzy-stream-v3-ios-instal
 ```
 
 First-time enterprise installs require testers to trust `Healthline Networks, Inc.`
-in iOS Settings.
+in iOS Settings:
+
+```text
+Settings > General > VPN & Device Management > Enterprise App > Healthline Networks, Inc. > Trust
+```
+
+iOS does not allow OTA installs to open the app automatically. The page includes
+a manual `dephealthline://` open link for use after install and trust are complete.
