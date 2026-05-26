@@ -3,16 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bezzy Depression iOS Install</title>
+    <title>Bezzy App Install</title>
     <style>
       :root {
         color-scheme: light dark;
         --accent: #0077b6;
+        --accent-strong: #00649b;
+        --android: #1b7f4c;
         --bg: #f7f9fb;
         --card: #ffffff;
         --muted: #5f6b7a;
         --text: #15202b;
         --border: #d8e0e8;
+        --soft: #eef4f8;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -22,6 +25,7 @@
           --muted: #9aa7b5;
           --text: #f2f5f8;
           --border: #303946;
+          --soft: #1d2631;
         }
       }
 
@@ -40,21 +44,21 @@
       }
 
       main {
-        width: min(100%, 720px);
+        width: min(100%, 920px);
         margin: 0 auto;
-        padding: 48px 20px;
+        padding: 32px 16px;
       }
 
       .panel {
         border: 1px solid var(--border);
         border-radius: 8px;
         background: var(--card);
-        padding: 28px;
+        padding: 24px;
       }
 
       .app-header {
         display: flex;
-        gap: 18px;
+        gap: 16px;
         align-items: center;
       }
 
@@ -62,11 +66,18 @@
         width: 72px;
         height: 72px;
         border-radius: 16px;
+        flex: 0 0 auto;
       }
 
       h1 {
         margin: 0 0 4px;
-        font-size: 2rem;
+        font-size: clamp(1.75rem, 6vw, 2.25rem);
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1.25rem;
         letter-spacing: 0;
       }
 
@@ -80,7 +91,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 14px;
-        margin-top: 24px;
+        margin-top: 22px;
         padding: 18px 0 0;
         border-top: 1px solid var(--border);
       }
@@ -90,10 +101,11 @@
         gap: 2px;
       }
 
-      .build-detail span {
+      .label {
         color: var(--muted);
-        font-size: 0.85rem;
+        font-size: 0.78rem;
         font-weight: 700;
+        letter-spacing: 0.04em;
         text-transform: uppercase;
       }
 
@@ -104,37 +116,113 @@
         font-weight: 700;
       }
 
+      .platform-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .platform-card {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: 16px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--soft);
+        padding: 18px;
+      }
+
+      .platform-card.is-recommended {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+
+      .platform-heading {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .platform-title {
+        display: grid;
+        gap: 3px;
+      }
+
+      .platform-pill {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 3px 10px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .recommended-label {
+        display: none;
+        color: var(--accent);
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .platform-card.is-recommended .recommended-label {
+        display: block;
+      }
+
+      .platform-meta {
+        display: grid;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .platform-meta p {
+        margin: 0;
+      }
+
       .install {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         min-height: 52px;
-        padding: 0 24px;
+        width: 100%;
+        padding: 0 18px;
         border-radius: 8px;
         background: var(--accent);
         color: white;
-        font-size: 1.1rem;
+        font-size: 1.04rem;
         font-weight: 700;
+        text-align: center;
         text-decoration: none;
       }
 
-      .actions {
+      .install:hover {
+        background: var(--accent-strong);
+      }
+
+      .install.android {
+        background: var(--android);
+      }
+
+      .secondary-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 28px;
+        gap: 10px;
       }
 
       .secondary {
+        flex: 1 1 150px;
         border: 1px solid var(--border);
         background: transparent;
         color: var(--text);
       }
 
       .instructions {
-        margin-top: 22px;
         border-top: 1px solid var(--border);
-        padding-top: 18px;
+        padding-top: 14px;
       }
 
       .instructions summary {
@@ -148,16 +236,16 @@
       }
 
       .steps {
-        margin: 18px 0 0;
+        margin: 14px 0 0;
         padding-left: 20px;
       }
 
       .steps li + li {
-        margin-top: 10px;
+        margin-top: 9px;
       }
 
       .instruction-notes {
-        margin-top: 18px;
+        margin-top: 14px;
         color: var(--muted);
       }
 
@@ -166,11 +254,30 @@
       }
 
       .instruction-notes p + p {
-        margin-top: 10px;
+        margin-top: 8px;
       }
 
       code {
         font-family: "SFMono-Regular", Consolas, monospace;
+      }
+
+      @media (max-width: 720px) {
+        main {
+          padding: 18px 12px;
+        }
+
+        .panel {
+          padding: 20px;
+        }
+
+        .platform-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .app-icon {
+          width: 64px;
+          height: 64px;
+        }
       }
     </style>
   </head>
@@ -181,65 +288,125 @@
           <img class="app-icon" src="./display-image.png" alt="" />
           <div>
             <h1 id="page-title">Bezzy Depression</h1>
-            <p class="meta">Stage iOS build</p>
-            <p class="meta">Version 14.6.1 (900723)</p>
+            <p class="meta">Stage builds for internal testing</p>
             <p class="meta"><code>com.healthline.dep-stage</code></p>
           </div>
         </div>
 
         <div class="build-summary" aria-label="Build details">
           <div class="build-detail">
-            <span>Last update</span>
-            <time
-              id="last-updated"
-              datetime="2026-05-24T20:14:16Z"
-              data-last-updated-at="2026-05-24T20:14:16Z"
-            >
-              May 24, 2026
-            </time>
-          </div>
-          <div class="build-detail">
-            <span>Environment</span>
+            <span class="label">Environment</span>
             <strong>Stage</strong>
           </div>
-        </div>
-
-        <div class="actions">
-          <a
-            class="install"
-            href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-ios-install.netlify.app/manifest.plist"
-          >
-            Install Bezzy Depression
-          </a>
-          <a class="install secondary" href="dephealthline://">
-            Open Bezzy Depression
-          </a>
-        </div>
-
-        <details class="instructions">
-          <summary>Installation instructions</summary>
-          <ol class="steps">
-            <li>Open this page in Safari on an iPhone or iPad.</li>
-            <li>Tap Install Bezzy Depression and confirm the install prompt.</li>
-            <li>After the app finishes installing, open Bezzy Depression from the Home Screen.</li>
-            <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
-            <li>Go to General, then VPN &amp; Device Management.</li>
-            <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
-            <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Depression.</li>
-            <li>This build is for authorized internal testing only.</li>
-          </ol>
-
-          <div class="instruction-notes">
-            <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
-            <p>iOS does not allow an OTA-installed app to open automatically. Use Open Bezzy Depression after installation and trust are complete.</p>
+          <div class="build-detail">
+            <span class="label">Audience</span>
+            <strong>Authorized testers</strong>
           </div>
-        </details>
+        </div>
+
+        <div class="platform-grid" aria-label="Choose a platform">
+          <article class="platform-card" data-platform-card="ios">
+            <div class="platform-heading">
+              <div class="platform-title">
+                <span class="label">iPhone and iPad</span>
+                <h2>Install iOS app</h2>
+                <span class="recommended-label">Recommended for this device</span>
+              </div>
+              <span class="platform-pill">iOS</span>
+            </div>
+
+            <div class="platform-meta">
+              <p><strong>Version:</strong> 14.6.1 (900723)</p>
+              <p>
+                <strong>Last update:</strong>
+                <time
+                  datetime="2026-05-24T20:14:47Z"
+                  data-last-updated-at="2026-05-24T20:14:47Z"
+                >
+                  May 24, 2026
+                </time>
+              </p>
+            </div>
+
+            <a
+              class="install"
+              href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/manifest.plist"
+            >
+              Install on iOS
+            </a>
+
+            <div class="secondary-actions">
+              <a class="install secondary" href="dephealthline://">
+                Open iOS app
+              </a>
+            </div>
+
+            <details class="instructions">
+              <summary>iOS installation instructions</summary>
+              <ol class="steps">
+                <li>Open this page in Safari on an iPhone or iPad.</li>
+                <li>Tap Install on iOS and confirm the install prompt.</li>
+                <li>After the app finishes installing, open Bezzy Depression from the Home Screen.</li>
+                <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
+                <li>Go to General, then VPN &amp; Device Management.</li>
+                <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
+                <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Depression.</li>
+              </ol>
+
+              <div class="instruction-notes">
+                <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
+                <p>iOS does not allow an OTA-installed app to open automatically. Use Open iOS app after installation and trust are complete.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="platform-card" data-platform-card="android">
+            <div class="platform-heading">
+              <div class="platform-title">
+                <span class="label">Android phone</span>
+                <h2>Download Android app</h2>
+                <span class="recommended-label">Recommended for this device</span>
+              </div>
+              <span class="platform-pill">Android</span>
+            </div>
+
+            <div class="platform-meta">
+              <p><strong>Build:</strong> Stage APK</p>
+              <p>
+                <strong>Last update:</strong>
+                <time
+                  datetime="2026-04-23T15:50:33Z"
+                  data-last-updated-at="2026-04-23T15:50:33Z"
+                >
+                  Apr 23, 2026
+                </time>
+              </p>
+            </div>
+
+            <a class="install android" href="./dep-stage.apk" download>
+              Download Android APK
+            </a>
+
+            <details class="instructions">
+              <summary>Android installation instructions</summary>
+              <ol class="steps">
+                <li>Open this page in Chrome on an Android device.</li>
+                <li>Tap Download Android APK.</li>
+                <li>Open the downloaded file when Chrome finishes downloading it.</li>
+                <li>If Android blocks the install, allow this browser to install unknown apps.</li>
+                <li>Finish the install, then open Bezzy Depression from the app launcher.</li>
+              </ol>
+
+              <div class="instruction-notes">
+                <p>Android may ask for install permission the first time a browser installs an APK.</p>
+                <p>This build is for authorized internal testing only.</p>
+              </div>
+            </details>
+          </article>
+        </div>
       </section>
     </main>
     <script>
-      const lastUpdatedElement = document.getElementById("last-updated");
-      const lastUpdatedAt = new Date(lastUpdatedElement.dataset.lastUpdatedAt);
-
       const numberWords = {
         1: "one",
         2: "two",
@@ -292,12 +459,30 @@
       }
 
       function renderLastUpdated() {
-        lastUpdatedElement.textContent = formatLastUpdated(lastUpdatedAt);
-        lastUpdatedElement.title = lastUpdatedAt.toLocaleString();
+        document.querySelectorAll("[data-last-updated-at]").forEach((element) => {
+          const lastUpdatedAt = new Date(element.dataset.lastUpdatedAt);
+          element.dateTime = lastUpdatedAt.toISOString();
+          element.textContent = formatLastUpdated(lastUpdatedAt);
+          element.title = lastUpdatedAt.toLocaleString();
+        });
       }
 
-      lastUpdatedElement.dateTime = lastUpdatedAt.toISOString();
+      function markRecommendedPlatform() {
+        const userAgent = navigator.userAgent || "";
+        const platform = /Android/i.test(userAgent)
+          ? "android"
+          : /iPhone|iPad|iPod/i.test(userAgent)
+            ? "ios"
+            : null;
+
+        if (!platform) return;
+
+        const card = document.querySelector(`[data-platform-card="${platform}"]`);
+        if (card) card.classList.add("is-recommended");
+      }
+
       renderLastUpdated();
+      markRecommendedPlatform();
       window.setInterval(renderLastUpdated, 30 * 1000);
     </script>
   </body>

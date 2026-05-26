@@ -6,6 +6,10 @@
   Content-Type: application/octet-stream
   Cache-Control: public, max-age=300
 
+/dep-stage.apk
+  Content-Type: application/vnd.android.package-archive
+  Cache-Control: public, max-age=300
+
 /display-image.png
   Content-Type: image/png
   Cache-Control: public, max-age=300
