@@ -4,10 +4,13 @@ Static Netlify installer for the DEP Stage enterprise iOS build and Android APK.
 
 ## Update the builds
 
-Replace `dep-release.ipa` with a new enterprise-signed IPA and extract or replace
-the local `dep-stage.apk` artifact with the Android stage APK. Then update
+Replace `dep-release.ipa` with a new enterprise-signed IPA and replace
+the local `dep-stage.apk` artifact with the Android stage release APK. Then update
 `manifest.plist` and `index.html` if the version, build number, bundle
 identifier, or timestamps changed.
+
+For Android, use a release-stage APK with the JS bundle embedded. Do not publish
+the debug/e2e APK output, because that build path requires Metro at runtime.
 
 `dep-stage.apk` is intentionally ignored by Git because the current DEP APK is
 larger than GitHub's 100 MB file limit. Deploy it to Netlify from the local
