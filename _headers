@@ -29,3 +29,11 @@
 /full-size-image.png
   Content-Type: image/png
   Cache-Control: public, max-age=300
+
+/pso-display-image.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=300
+
+/pso-full-size-image.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=300
