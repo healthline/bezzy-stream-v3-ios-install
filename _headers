@@ -2,11 +2,23 @@
   Content-Type: application/xml
   Cache-Control: no-cache
 
+/pso-manifest.plist
+  Content-Type: application/xml
+  Cache-Control: no-cache
+
 /dep-release.ipa
   Content-Type: application/octet-stream
   Cache-Control: public, max-age=300
 
+/pso-release.ipa
+  Content-Type: application/octet-stream
+  Cache-Control: public, max-age=300
+
 /dep-stage.apk
+  Content-Type: application/vnd.android.package-archive
+  Cache-Control: public, max-age=300
+
+/pso-stage.apk
   Content-Type: application/vnd.android.package-archive
   Cache-Control: public, max-age=300
 

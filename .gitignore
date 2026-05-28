@@ -2,5 +2,6 @@
 .netlify
 
 # Android APKs are deployed to Netlify from local artifacts.
-# GitHub rejects this DEP APK because it is larger than 100 MB.
+# GitHub rejects these APKs because they're larger than 100 MB.
 dep-stage.apk
+pso-stage.apk

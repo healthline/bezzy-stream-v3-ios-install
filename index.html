@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bezzy App Install</title>
+    <title>Bezzy Stage Installs</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -47,6 +47,8 @@
         width: min(100%, 920px);
         margin: 0 auto;
         padding: 32px 16px;
+        display: grid;
+        gap: 24px;
       }
 
       .panel {
@@ -54,6 +56,21 @@
         border-radius: 8px;
         background: var(--card);
         padding: 24px;
+      }
+
+      .page-header {
+        text-align: center;
+        padding: 0 8px;
+      }
+
+      .page-header h1 {
+        margin: 0 0 6px;
+        font-size: clamp(1.6rem, 5vw, 2rem);
+      }
+
+      .page-header p {
+        margin: 0;
+        color: var(--muted);
       }
 
       .app-header {
@@ -283,12 +300,17 @@
   </head>
   <body>
     <main>
-      <section class="panel" aria-labelledby="page-title">
+      <header class="page-header">
+        <h1>Bezzy Stage Installs</h1>
+        <p>Stage builds for authorized internal testing.</p>
+      </header>
+
+      <section class="panel" aria-labelledby="dep-title">
         <div class="app-header">
           <img class="app-icon" src="./display-image.png" alt="" />
           <div>
-            <h1 id="page-title">Bezzy Depression</h1>
-            <p class="meta">Stage builds for internal testing</p>
+            <h1 id="dep-title">Bezzy Depression</h1>
+            <p class="meta">Stage build</p>
             <p class="meta"><code>com.healthline.dep-stage</code></p>
           </div>
         </div>
@@ -299,13 +321,13 @@
             <strong>Stage</strong>
           </div>
           <div class="build-detail">
-            <span class="label">Audience</span>
-            <strong>Authorized testers</strong>
+            <span class="label">Version</span>
+            <strong>14.6.1 (900723)</strong>
           </div>
         </div>
 
         <div class="platform-grid" aria-label="Choose a platform">
-          <article class="platform-card" data-platform-card="ios">
+          <article class="platform-card" data-platform-card="ios" data-app="dep">
             <div class="platform-heading">
               <div class="platform-title">
                 <span class="label">iPhone and iPad</span>
@@ -320,8 +342,8 @@
               <p>
                 <strong>Last update:</strong>
                 <time
-                  datetime="2026-05-28T03:59:24Z"
-                  data-last-updated-at="2026-05-28T03:59:24Z"
+                  datetime="2026-05-28T18:00:00Z"
+                  data-last-updated-at="2026-05-28T18:00:00Z"
                 >
                   May 28, 2026
                 </time>
@@ -360,7 +382,7 @@
             </details>
           </article>
 
-          <article class="platform-card" data-platform-card="android">
+          <article class="platform-card" data-platform-card="android" data-app="dep">
             <div class="platform-heading">
               <div class="platform-title">
                 <span class="label">Android phone</span>
@@ -375,8 +397,8 @@
               <p>
                 <strong>Last update:</strong>
                 <time
-                  datetime="2026-05-28T03:59:24Z"
-                  data-last-updated-at="2026-05-28T03:59:24Z"
+                  datetime="2026-05-28T18:00:00Z"
+                  data-last-updated-at="2026-05-28T18:00:00Z"
                 >
                   May 28, 2026
                 </time>
@@ -395,6 +417,129 @@
                 <li>Open the downloaded file when Chrome finishes downloading it.</li>
                 <li>If Android blocks the install, allow this browser to install unknown apps.</li>
                 <li>Finish the install, then open Bezzy Depression from the app launcher.</li>
+              </ol>
+
+              <div class="instruction-notes">
+                <p>Android may ask for install permission the first time a browser installs an APK.</p>
+                <p>This build is for authorized internal testing only.</p>
+              </div>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="pso-title">
+        <div class="app-header">
+          <img class="app-icon" src="./display-image.png" alt="" />
+          <div>
+            <h1 id="pso-title">Bezzy Psoriasis</h1>
+            <p class="meta">Stage build</p>
+            <p class="meta"><code>com.healthline.pso-stage</code></p>
+          </div>
+        </div>
+
+        <div class="build-summary" aria-label="Build details">
+          <div class="build-detail">
+            <span class="label">Environment</span>
+            <strong>Stage</strong>
+          </div>
+          <div class="build-detail">
+            <span class="label">Version</span>
+            <strong>14.6.1 (900751)</strong>
+          </div>
+        </div>
+
+        <div class="platform-grid" aria-label="Choose a platform">
+          <article class="platform-card" data-platform-card="ios" data-app="pso">
+            <div class="platform-heading">
+              <div class="platform-title">
+                <span class="label">iPhone and iPad</span>
+                <h2>Install iOS app</h2>
+                <span class="recommended-label">Recommended for this device</span>
+              </div>
+              <span class="platform-pill">iOS</span>
+            </div>
+
+            <div class="platform-meta">
+              <p><strong>Version:</strong> 14.6.1 (900751)</p>
+              <p>
+                <strong>Last update:</strong>
+                <time
+                  datetime="2026-05-28T18:00:00Z"
+                  data-last-updated-at="2026-05-28T18:00:00Z"
+                >
+                  May 28, 2026
+                </time>
+              </p>
+            </div>
+
+            <a
+              class="install"
+              href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/pso-manifest.plist"
+            >
+              Install on iOS
+            </a>
+
+            <div class="secondary-actions">
+              <a class="install secondary" href="psohealthline://">
+                Open iOS app
+              </a>
+            </div>
+
+            <details class="instructions">
+              <summary>iOS installation instructions</summary>
+              <ol class="steps">
+                <li>Open this page in Safari on an iPhone or iPad.</li>
+                <li>Tap Install on iOS and confirm the install prompt.</li>
+                <li>After the app finishes installing, open Bezzy Psoriasis from the Home Screen.</li>
+                <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
+                <li>Go to General, then VPN &amp; Device Management.</li>
+                <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
+                <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Psoriasis.</li>
+              </ol>
+
+              <div class="instruction-notes">
+                <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
+                <p>iOS does not allow an OTA-installed app to open automatically. Use Open iOS app after installation and trust are complete.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="platform-card" data-platform-card="android" data-app="pso">
+            <div class="platform-heading">
+              <div class="platform-title">
+                <span class="label">Android phone</span>
+                <h2>Download Android app</h2>
+                <span class="recommended-label">Recommended for this device</span>
+              </div>
+              <span class="platform-pill">Android</span>
+            </div>
+
+            <div class="platform-meta">
+              <p><strong>Build:</strong> Stage APK</p>
+              <p>
+                <strong>Last update:</strong>
+                <time
+                  datetime="2026-05-28T18:00:00Z"
+                  data-last-updated-at="2026-05-28T18:00:00Z"
+                >
+                  May 28, 2026
+                </time>
+              </p>
+            </div>
+
+            <a class="install android" href="./pso-stage.apk" download>
+              Download Android APK
+            </a>
+
+            <details class="instructions">
+              <summary>Android installation instructions</summary>
+              <ol class="steps">
+                <li>Open this page in Chrome on an Android device.</li>
+                <li>Tap Download Android APK.</li>
+                <li>Open the downloaded file when Chrome finishes downloading it.</li>
+                <li>If Android blocks the install, allow this browser to install unknown apps.</li>
+                <li>Finish the install, then open Bezzy Psoriasis from the app launcher.</li>
               </ol>
 
               <div class="instruction-notes">
@@ -477,8 +622,9 @@
 
         if (!platform) return;
 
-        const card = document.querySelector(`[data-platform-card="${platform}"]`);
-        if (card) card.classList.add("is-recommended");
+        document
+          .querySelectorAll(`[data-platform-card="${platform}"]`)
+          .forEach((card) => card.classList.add("is-recommended"));
       }
 
       renderLastUpdated();

@@ -1,49 +1,73 @@
-# DEP Stage App Install
+# Bezzy Stage Installs
 
-Static Netlify installer for the DEP Stage enterprise iOS build and Android APK.
+Static Netlify installer hosting enterprise iOS builds and Android APKs for
+authorized internal testers. Currently hosts two apps:
 
-## Update the builds
+- Bezzy Depression (`com.healthline.dep-stage`)
+- Bezzy Psoriasis  (`com.healthline.pso-stage`)
 
-Replace `dep-release.ipa` with a new enterprise-signed IPA and replace
-the local `dep-stage.apk` artifact with the Android stage release APK. Then update
-`manifest.plist` and `index.html` if the version, build number, bundle
-identifier, or timestamps changed.
-
-For Android, use a release-stage APK with the JS bundle embedded. Do not publish
-the debug/e2e APK output, because that build path requires Metro at runtime.
-
-`dep-stage.apk` is intentionally ignored by Git because the current DEP APK is
-larger than GitHub's 100 MB file limit. Deploy it to Netlify from the local
-artifact instead of committing it.
-
-The installer page is:
+The page is:
 
 ```text
 https://bezzy-stream-v3-app-install.netlify.app/
 ```
 
-The direct iOS install URL is:
+## Update an app's builds
+
+Per app, replace the IPA + APK and update `index.html` if the version, build
+number, or timestamps changed. Update the corresponding manifest only if the
+bundle id, version, or IPA URL changed.
+
+| App | iOS IPA            | Android APK          | iOS manifest         |
+| --- | ------------------ | -------------------- | -------------------- |
+| dep | `dep-release.ipa`  | `dep-stage.apk`      | `manifest.plist`     |
+| pso | `pso-release.ipa`  | `pso-stage.apk`      | `pso-manifest.plist` |
+
+For Android, use a release-stage APK with the JS bundle embedded. Do not
+publish the debug/e2e APK output, because that build path requires Metro at
+runtime.
+
+`dep-stage.apk` and `pso-stage.apk` are intentionally ignored by Git because
+APKs exceed GitHub's 100 MB file limit. Deploy them to Netlify from the local
+artifacts instead of committing.
+
+## Direct install URLs
+
+iOS:
 
 ```text
 itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/manifest.plist
+itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/pso-manifest.plist
 ```
 
-The Android APK URL is:
+Android APK:
 
 ```text
 https://bezzy-stream-v3-app-install.netlify.app/dep-stage.apk
+https://bezzy-stream-v3-app-install.netlify.app/pso-stage.apk
 ```
 
-First-time iOS enterprise installs require testers to trust `Healthline Networks,
-Inc.` in iOS Settings:
+## iOS enterprise trust
+
+First-time iOS enterprise installs require testers to trust
+`Healthline Networks, Inc.` in iOS Settings:
 
 ```text
 Settings > General > VPN & Device Management > Enterprise App > Healthline Networks, Inc. > Trust
 ```
 
-Android installs may require testers to allow the browser to install unknown
-apps before opening the downloaded APK.
+Trust is per device, not per app, so trusting once covers both Bezzy apps on
+the same device.
 
-iOS does not allow OTA installs to open the app automatically. The page includes
-a manual `dephealthline://` open link for use after install and trust are
-complete.
+## Android side-loading
+
+Android may require testers to allow the browser to install unknown apps the
+first time. There is no enterprise-trust step for the APK path.
+
+## Open links
+
+iOS does not allow OTA installs to open the app automatically. The page
+includes manual deep links for use after install and trust are complete:
+
+- `dephealthline://`
+- `psohealthline://`
