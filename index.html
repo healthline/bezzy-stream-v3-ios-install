@@ -73,6 +73,17 @@
         color: var(--muted);
       }
 
+      .filter {
+        width: 100%;
+        margin-top: 14px;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--card);
+        color: var(--text);
+        font-size: 1rem;
+      }
+
       .app-header {
         display: flex;
         gap: 16px;
@@ -278,6 +289,10 @@
         font-family: "SFMono-Regular", Consolas, monospace;
       }
 
+      .panel[hidden] {
+        display: none;
+      }
+
       @media (max-width: 720px) {
         main {
           padding: 18px 12px;
@@ -303,333 +318,207 @@
       <header class="page-header">
         <h1>Bezzy Stage Installs</h1>
         <p>Stage builds for authorized internal testing.</p>
+        <input
+          id="app-filter"
+          class="filter"
+          type="search"
+          placeholder="Filter apps (e.g. migraine, psoriasis)…"
+          aria-label="Filter apps"
+        />
       </header>
 
-      <section class="panel" aria-labelledby="dep-title">
-        <div class="app-header">
-          <img class="app-icon" src="./display-image.png" alt="" />
-          <div>
-            <h1 id="dep-title">Bezzy Depression</h1>
-            <p class="meta">Stage build</p>
-            <p class="meta"><code>com.healthline.dep-stage</code></p>
-          </div>
-        </div>
-
-        <div class="build-summary" aria-label="Build details">
-          <div class="build-detail">
-            <span class="label">Environment</span>
-            <strong>Stage</strong>
-          </div>
-          <div class="build-detail">
-            <span class="label">Version</span>
-            <strong>14.6.1 (900723)</strong>
-          </div>
-        </div>
-
-        <div class="platform-grid" aria-label="Choose a platform">
-          <article class="platform-card" data-platform-card="ios" data-app="dep">
-            <div class="platform-heading">
-              <div class="platform-title">
-                <span class="label">iPhone and iPad</span>
-                <h2>Install iOS app</h2>
-                <span class="recommended-label">Recommended for this device</span>
-              </div>
-              <span class="platform-pill">iOS</span>
-            </div>
-
-            <div class="platform-meta">
-              <p><strong>Version:</strong> 14.6.1 (900723)</p>
-              <p>
-                <strong>Last update:</strong>
-                <time
-                  datetime="2026-05-29T01:46:38Z"
-                  data-last-updated-at="2026-05-29T01:46:38Z"
-                >
-                  May 28, 2026
-                </time>
-              </p>
-            </div>
-
-            <a
-              class="install"
-              href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/manifest.plist"
-            >
-              Install on iOS
-            </a>
-
-            <div class="secondary-actions">
-              <a class="install secondary" href="dephealthline://">
-                Open iOS app
-              </a>
-            </div>
-
-            <details class="instructions">
-              <summary>iOS installation instructions</summary>
-              <ol class="steps">
-                <li>Open this page in Safari on an iPhone or iPad.</li>
-                <li>Tap Install on iOS and confirm the install prompt.</li>
-                <li>After the app finishes installing, open Bezzy Depression from the Home Screen.</li>
-                <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
-                <li>Go to General, then VPN &amp; Device Management.</li>
-                <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
-                <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Depression.</li>
-              </ol>
-
-              <div class="instruction-notes">
-                <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
-                <p>iOS does not allow an OTA-installed app to open automatically. Use Open iOS app after installation and trust are complete.</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="platform-card" data-platform-card="android" data-app="dep">
-            <div class="platform-heading">
-              <div class="platform-title">
-                <span class="label">Android phone</span>
-                <h2>Download Android app</h2>
-                <span class="recommended-label">Recommended for this device</span>
-              </div>
-              <span class="platform-pill">Android</span>
-            </div>
-
-            <div class="platform-meta">
-              <p><strong>Build:</strong> Stage APK</p>
-              <p>
-                <strong>Last update:</strong>
-                <time
-                  datetime="2026-05-29T01:46:38Z"
-                  data-last-updated-at="2026-05-29T01:46:38Z"
-                >
-                  May 28, 2026
-                </time>
-              </p>
-            </div>
-
-            <a class="install android" href="./dep-stage.apk" download>
-              Download Android APK
-            </a>
-
-            <details class="instructions">
-              <summary>Android installation instructions</summary>
-              <ol class="steps">
-                <li>Open this page in Chrome on an Android device.</li>
-                <li>Tap Download Android APK.</li>
-                <li>Open the downloaded file when Chrome finishes downloading it.</li>
-                <li>If Android blocks the install, allow this browser to install unknown apps.</li>
-                <li>Finish the install, then open Bezzy Depression from the app launcher.</li>
-              </ol>
-
-              <div class="instruction-notes">
-                <p>Android may ask for install permission the first time a browser installs an APK.</p>
-                <p>This build is for authorized internal testing only.</p>
-              </div>
-            </details>
-          </article>
-        </div>
-      </section>
-
-      <section class="panel" aria-labelledby="pso-title">
-        <div class="app-header">
-          <img class="app-icon" src="./pso-display-image.png" alt="" />
-          <div>
-            <h1 id="pso-title">Bezzy Psoriasis</h1>
-            <p class="meta">Stage build</p>
-            <p class="meta"><code>com.healthline.pso-stage</code></p>
-          </div>
-        </div>
-
-        <div class="build-summary" aria-label="Build details">
-          <div class="build-detail">
-            <span class="label">Environment</span>
-            <strong>Stage</strong>
-          </div>
-          <div class="build-detail">
-            <span class="label">Version</span>
-            <strong>14.6.1 (900751)</strong>
-          </div>
-        </div>
-
-        <div class="platform-grid" aria-label="Choose a platform">
-          <article class="platform-card" data-platform-card="ios" data-app="pso">
-            <div class="platform-heading">
-              <div class="platform-title">
-                <span class="label">iPhone and iPad</span>
-                <h2>Install iOS app</h2>
-                <span class="recommended-label">Recommended for this device</span>
-              </div>
-              <span class="platform-pill">iOS</span>
-            </div>
-
-            <div class="platform-meta">
-              <p><strong>Version:</strong> 14.6.1 (900751)</p>
-              <p>
-                <strong>Last update:</strong>
-                <time
-                  datetime="2026-05-29T01:46:38Z"
-                  data-last-updated-at="2026-05-29T01:46:38Z"
-                >
-                  May 28, 2026
-                </time>
-              </p>
-            </div>
-
-            <a
-              class="install"
-              href="itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/pso-manifest.plist"
-            >
-              Install on iOS
-            </a>
-
-            <div class="secondary-actions">
-              <a class="install secondary" href="psohealthline://">
-                Open iOS app
-              </a>
-            </div>
-
-            <details class="instructions">
-              <summary>iOS installation instructions</summary>
-              <ol class="steps">
-                <li>Open this page in Safari on an iPhone or iPad.</li>
-                <li>Tap Install on iOS and confirm the install prompt.</li>
-                <li>After the app finishes installing, open Bezzy Psoriasis from the Home Screen.</li>
-                <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
-                <li>Go to General, then VPN &amp; Device Management.</li>
-                <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
-                <li>Tap Trust Healthline Networks, Inc., then return to Bezzy Psoriasis.</li>
-              </ol>
-
-              <div class="instruction-notes">
-                <p>The trust step is only needed the first time this enterprise developer is used on a device.</p>
-                <p>iOS does not allow an OTA-installed app to open automatically. Use Open iOS app after installation and trust are complete.</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="platform-card" data-platform-card="android" data-app="pso">
-            <div class="platform-heading">
-              <div class="platform-title">
-                <span class="label">Android phone</span>
-                <h2>Download Android app</h2>
-                <span class="recommended-label">Recommended for this device</span>
-              </div>
-              <span class="platform-pill">Android</span>
-            </div>
-
-            <div class="platform-meta">
-              <p><strong>Build:</strong> Stage APK</p>
-              <p>
-                <strong>Last update:</strong>
-                <time
-                  datetime="2026-05-29T01:46:38Z"
-                  data-last-updated-at="2026-05-29T01:46:38Z"
-                >
-                  May 28, 2026
-                </time>
-              </p>
-            </div>
-
-            <a class="install android" href="./pso-stage.apk" download>
-              Download Android APK
-            </a>
-
-            <details class="instructions">
-              <summary>Android installation instructions</summary>
-              <ol class="steps">
-                <li>Open this page in Chrome on an Android device.</li>
-                <li>Tap Download Android APK.</li>
-                <li>Open the downloaded file when Chrome finishes downloading it.</li>
-                <li>If Android blocks the install, allow this browser to install unknown apps.</li>
-                <li>Finish the install, then open Bezzy Psoriasis from the app launcher.</li>
-              </ol>
-
-              <div class="instruction-notes">
-                <p>Android may ask for install permission the first time a browser installs an APK.</p>
-                <p>This build is for authorized internal testing only.</p>
-              </div>
-            </details>
-          </article>
-        </div>
-      </section>
+      <div id="app-list"></div>
     </main>
-    <script>
-      const numberWords = {
-        1: "one",
-        2: "two",
-        3: "three",
-        4: "four",
-        5: "five",
-        6: "six",
-        7: "seven",
-        8: "eight",
-        9: "nine",
-        10: "ten",
-        11: "eleven",
-        12: "twelve",
-      };
 
-      function countLabel(value) {
-        return numberWords[value] || String(value);
+    <script>
+      // Single build timestamp for this rollout.
+      const BUILD_UPDATED_AT = "2026-05-29T01:30:00Z";
+
+      // All 10 Bezzy stage apps. scheme:null when the app has no usable
+      // custom URL scheme (copd's Info.plist carries a wrong scheme; msbuddy
+      // has none) — those omit the "Open app" convenience link.
+      const APPS = [
+        { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  version: "14.6.1 (900723)", manifest: "manifest.plist",         apk: "dep-stage.apk",     icon: "display-image.png",         scheme: "dephealthline" },
+        { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  version: "14.6.1 (900751)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk",     icon: "pso-display-image.png",     scheme: "psohealthline" },
+        { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   version: "14.6.1 (900719)", manifest: "bcbuddy-manifest.plist", apk: "bcbuddy-stage.apk", icon: "bcbuddy-display-image.png", scheme: "bchealthline" },
+        { id: "copd",    name: "Bezzy COPD",                      bundleId: "com.healthline.copd-stage", version: "14.6.1 (626)",    manifest: "copd-manifest.plist",    apk: "copd-stage.apk",    icon: "copd-display-image.png",    scheme: null },
+        { id: "ibd",     name: "Bezzy IBD (Crohn's & Colitis)",   bundleId: "com.healthline.ibd-stage",  version: "14.6.1 (900721)", manifest: "ibd-manifest.plist",     apk: "ibd-stage.apk",     icon: "ibd-display-image.png",     scheme: "ibdhealthline" },
+        { id: "mig",     name: "Bezzy Migraine",                  bundleId: "com.healthline.mig-stage",  version: "14.6.1 (900730)", manifest: "mig-manifest.plist",     apk: "mig-stage.apk",     icon: "mig-display-image.png",     scheme: "mighealthline" },
+        { id: "msbuddy", name: "Bezzy MS: Multiple Sclerosis",    bundleId: "com.healthline.ms-stage",   version: "14.6.1 (900749)", manifest: "msbuddy-manifest.plist", apk: "msbuddy-stage.apk", icon: "msbuddy-display-image.png", scheme: null },
+        { id: "psa",     name: "Bezzy Psoriatic Arthritis",       bundleId: "com.healthline.psa-stage",  version: "14.6.1 (900731)", manifest: "psa-manifest.plist",     apk: "psa-stage.apk",     icon: "psa-display-image.png",     scheme: "psahealthline" },
+        { id: "ra",      name: "Bezzy RA: Rheumatoid Arthritis",  bundleId: "com.healthline.ra-stage",   version: "14.6.1 (900730)", manifest: "ra-manifest.plist",      apk: "ra-stage.apk",      icon: "ra-display-image.png",      scheme: "rahealthline" },
+        { id: "t2d",     name: "Bezzy Type 2 Diabetes",           bundleId: "com.healthline.t2d-stage",  version: "14.6.1 (900720)", manifest: "t2d-manifest.plist",     apk: "t2d-stage.apk",     icon: "t2d-display-image.png",     scheme: "t2dhealthline" },
+      ];
+
+      const BASE = "https://bezzy-stream-v3-app-install.netlify.app";
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, (c) => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+        }[c]));
       }
 
+      function appPanel(app) {
+        const name = esc(app.name);
+        const openLink = app.scheme
+          ? `<div class="secondary-actions">
+               <a class="install secondary" href="${app.scheme}://">Open iOS app</a>
+             </div>`
+          : "";
+        return `
+        <section class="panel" data-app="${app.id}" data-name="${esc(app.name.toLowerCase())} ${app.id}">
+          <div class="app-header">
+            <img class="app-icon" src="./${app.icon}" alt="" />
+            <div>
+              <h1>${name}</h1>
+              <p class="meta">Stage build</p>
+              <p class="meta"><code>${esc(app.bundleId)}</code></p>
+            </div>
+          </div>
+
+          <div class="build-summary" aria-label="Build details">
+            <div class="build-detail">
+              <span class="label">Environment</span>
+              <strong>Stage</strong>
+            </div>
+            <div class="build-detail">
+              <span class="label">Version</span>
+              <strong>${esc(app.version)}</strong>
+            </div>
+          </div>
+
+          <div class="platform-grid" aria-label="Choose a platform">
+            <article class="platform-card" data-platform-card="ios">
+              <div class="platform-heading">
+                <div class="platform-title">
+                  <span class="label">iPhone and iPad</span>
+                  <h2>Install iOS app</h2>
+                  <span class="recommended-label">Recommended for this device</span>
+                </div>
+                <span class="platform-pill">iOS</span>
+              </div>
+              <div class="platform-meta">
+                <p><strong>Version:</strong> ${esc(app.version)}</p>
+                <p><strong>Last update:</strong>
+                  <time data-last-updated-at="${BUILD_UPDATED_AT}">${BUILD_UPDATED_AT}</time>
+                </p>
+              </div>
+              <a class="install" href="itms-services://?action=download-manifest&url=${BASE}/${app.manifest}">Install on iOS</a>
+              ${openLink}
+              <details class="instructions">
+                <summary>iOS installation instructions</summary>
+                <ol class="steps">
+                  <li>Open this page in Safari on an iPhone or iPad.</li>
+                  <li>Tap Install on iOS and confirm the install prompt.</li>
+                  <li>After it installs, open ${name} from the Home Screen.</li>
+                  <li>If iOS says the enterprise developer is untrusted, open Settings.</li>
+                  <li>Go to General, then VPN &amp; Device Management.</li>
+                  <li>Under Enterprise App, tap Healthline Networks, Inc.</li>
+                  <li>Tap Trust Healthline Networks, Inc., then return to ${name}.</li>
+                </ol>
+                <div class="instruction-notes">
+                  <p>The trust step is only needed the first time this enterprise developer is used on a device, and covers every Bezzy app on it.</p>
+                  <p>iOS does not allow an OTA-installed app to open automatically.</p>
+                </div>
+              </details>
+            </article>
+
+            <article class="platform-card" data-platform-card="android">
+              <div class="platform-heading">
+                <div class="platform-title">
+                  <span class="label">Android phone</span>
+                  <h2>Download Android app</h2>
+                  <span class="recommended-label">Recommended for this device</span>
+                </div>
+                <span class="platform-pill">Android</span>
+              </div>
+              <div class="platform-meta">
+                <p><strong>Build:</strong> Stage APK</p>
+                <p><strong>Last update:</strong>
+                  <time data-last-updated-at="${BUILD_UPDATED_AT}">${BUILD_UPDATED_AT}</time>
+                </p>
+              </div>
+              <a class="install android" href="./${app.apk}" download>Download Android APK</a>
+              <details class="instructions">
+                <summary>Android installation instructions</summary>
+                <ol class="steps">
+                  <li>Open this page in Chrome on an Android device.</li>
+                  <li>Tap Download Android APK.</li>
+                  <li>Open the downloaded file when Chrome finishes.</li>
+                  <li>If Android blocks the install, allow this browser to install unknown apps.</li>
+                  <li>Finish the install, then open ${name} from the app launcher.</li>
+                </ol>
+                <div class="instruction-notes">
+                  <p>Android may ask for install permission the first time a browser installs an APK.</p>
+                  <p>This build is for authorized internal testing only.</p>
+                </div>
+              </details>
+            </article>
+          </div>
+        </section>`;
+      }
+
+      const numberWords = {
+        1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six",
+        7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve",
+      };
+      const countLabel = (v) => numberWords[v] || String(v);
+
       function isYesterday(date, now) {
-        const yesterday = new Date(now);
-        yesterday.setDate(now.getDate() - 1);
-        return date.toDateString() === yesterday.toDateString();
+        const y = new Date(now);
+        y.setDate(now.getDate() - 1);
+        return date.toDateString() === y.toDateString();
       }
 
       function formatLastUpdated(date, now = new Date()) {
-        const diffMs = now.getTime() - date.getTime();
-        const elapsedMs = Math.max(0, diffMs);
-        const minuteMs = 60 * 1000;
-        const hourMs = 60 * minuteMs;
-
-        if (elapsedMs < 45 * 1000) return "just now";
-        if (elapsedMs < 90 * 1000) return "one minute ago";
-        if (elapsedMs < hourMs) {
-          const minutes = Math.round(elapsedMs / minuteMs);
-          return `${countLabel(minutes)} minutes ago`;
-        }
-        if (elapsedMs < 90 * minuteMs) return "one hour ago";
-        if (elapsedMs < 24 * hourMs) {
-          const hours = Math.round(elapsedMs / hourMs);
-          return `${countLabel(hours)} hours ago`;
-        }
+        const elapsed = Math.max(0, now.getTime() - date.getTime());
+        const min = 60 * 1000, hr = 60 * min;
+        if (elapsed < 45 * 1000) return "just now";
+        if (elapsed < 90 * 1000) return "one minute ago";
+        if (elapsed < hr) return `${countLabel(Math.round(elapsed / min))} minutes ago`;
+        if (elapsed < 90 * min) return "one hour ago";
+        if (elapsed < 24 * hr) return `${countLabel(Math.round(elapsed / hr))} hours ago`;
         if (isYesterday(date, now)) return "yesterday";
-
         return date.toLocaleDateString(undefined, {
-          month: "short",
-          day: "numeric",
+          month: "short", day: "numeric",
           year: date.getFullYear() === now.getFullYear() ? undefined : "numeric",
         });
       }
 
       function renderLastUpdated() {
-        document.querySelectorAll("[data-last-updated-at]").forEach((element) => {
-          const lastUpdatedAt = new Date(element.dataset.lastUpdatedAt);
-          element.dateTime = lastUpdatedAt.toISOString();
-          element.textContent = formatLastUpdated(lastUpdatedAt);
-          element.title = lastUpdatedAt.toLocaleString();
+        document.querySelectorAll("[data-last-updated-at]").forEach((el) => {
+          const d = new Date(el.dataset.lastUpdatedAt);
+          el.dateTime = d.toISOString();
+          el.textContent = formatLastUpdated(d);
+          el.title = d.toLocaleString();
         });
       }
 
       function markRecommendedPlatform() {
-        const userAgent = navigator.userAgent || "";
-        const platform = /Android/i.test(userAgent)
+        const ua = navigator.userAgent || "";
+        const platform = /Android/i.test(ua)
           ? "android"
-          : /iPhone|iPad|iPod/i.test(userAgent)
-            ? "ios"
-            : null;
-
+          : /iPhone|iPad|iPod/i.test(ua) ? "ios" : null;
         if (!platform) return;
-
         document
           .querySelectorAll(`[data-platform-card="${platform}"]`)
-          .forEach((card) => card.classList.add("is-recommended"));
+          .forEach((c) => c.classList.add("is-recommended"));
       }
 
+      function applyFilter(q) {
+        const term = q.trim().toLowerCase();
+        document.querySelectorAll("[data-app]").forEach((panel) => {
+          panel.hidden = term !== "" && !panel.dataset.name.includes(term);
+        });
+      }
+
+      document.getElementById("app-list").innerHTML = APPS.map(appPanel).join("");
       renderLastUpdated();
       markRecommendedPlatform();
       window.setInterval(renderLastUpdated, 30 * 1000);
+      document
+        .getElementById("app-filter")
+        .addEventListener("input", (e) => applyFilter(e.target.value));
     </script>
   </body>
 </html>

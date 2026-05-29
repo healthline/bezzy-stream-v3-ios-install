@@ -1,73 +1,59 @@
 # Bezzy Stage Installs
 
 Static Netlify installer hosting enterprise iOS builds and Android APKs for
-authorized internal testers. Currently hosts two apps:
+authorized internal testers. Hosts all 10 Bezzy stage apps.
 
-- Bezzy Depression (`com.healthline.dep-stage`)
-- Bezzy Psoriasis  (`com.healthline.pso-stage`)
+Page: https://bezzy-stream-v3-app-install.netlify.app/
 
-The page is:
+## Apps
 
-```text
-https://bezzy-stream-v3-app-install.netlify.app/
-```
+| App | iOS bundle id | IPA | APK | iOS manifest |
+| --- | --- | --- | --- | --- |
+| Bezzy Depression | com.healthline.dep-stage | dep-release.ipa | dep-stage.apk | manifest.plist |
+| Bezzy Psoriasis | com.healthline.pso-stage | pso-release.ipa | pso-stage.apk | pso-manifest.plist |
+| Bezzy Breast Cancer | com.healthline.bc-stage | bcbuddy-release.ipa | bcbuddy-stage.apk | bcbuddy-manifest.plist |
+| Bezzy COPD | com.healthline.copd-stage | copd-release.ipa | copd-stage.apk | copd-manifest.plist |
+| Bezzy IBD | com.healthline.ibd-stage | ibd-release.ipa | ibd-stage.apk | ibd-manifest.plist |
+| Bezzy Migraine | com.healthline.mig-stage | mig-release.ipa | mig-stage.apk | mig-manifest.plist |
+| Bezzy MS | com.healthline.ms-stage | msbuddy-release.ipa | msbuddy-stage.apk | msbuddy-manifest.plist |
+| Bezzy Psoriatic Arthritis | com.healthline.psa-stage | psa-release.ipa | psa-stage.apk | psa-manifest.plist |
+| Bezzy RA | com.healthline.ra-stage | ra-release.ipa | ra-stage.apk | ra-manifest.plist |
+| Bezzy Type 2 Diabetes | com.healthline.t2d-stage | t2d-release.ipa | t2d-stage.apk | t2d-manifest.plist |
 
-## Update an app's builds
+`index.html` renders all apps from the `APPS` array in its inline script; add or
+update an entry there when an app changes. Each app also needs its `*-display-image.png`
+(57px) + `*-full-size-image.png` (512px) icons and its `*-manifest.plist`.
 
-Per app, replace the IPA + APK and update `index.html` if the version, build
-number, or timestamps changed. Update the corresponding manifest only if the
-bundle id, version, or IPA URL changed.
+## Updating builds
 
-| App | iOS IPA            | Android APK          | iOS manifest         |
-| --- | ------------------ | -------------------- | -------------------- |
-| dep | `dep-release.ipa`  | `dep-stage.apk`      | `manifest.plist`     |
-| pso | `pso-release.ipa`  | `pso-stage.apk`      | `pso-manifest.plist` |
+Per app: replace the IPA + APK, bump the version/build in the `APPS` array (and
+the `bundle-version` in that app's manifest if it changed).
 
-For Android, use a release-stage APK with the JS bundle embedded. Do not
-publish the debug/e2e APK output, because that build path requires Metro at
-runtime.
+- iOS IPA: `fastlane build_with_stage_profile` (or `rn_stage`) per app.
+- Android APK: `assembleStageRelease`. **Force a fresh JS bundle** for core JS
+  changes — gradle does not treat the workspace-symlinked `healthline-cares-core`
+  as a bundle-task input, so clear the bundle outputs and pass `--no-build-cache`:
+  ```
+  rm -rf <app>/android/app/build/generated/assets/createBundleStageReleaseJsAndAssets \
+         <app>/android/app/build/intermediates/assets/stageRelease
+  ./gradlew assembleStageRelease --no-build-cache
+  ```
+  If gradle fails with "No matching variant of project :shopify_flash-list",
+  also clear stale autolinking: `rm -rf <app>/android/build/generated/autolinking <app>/android/.cxx`.
 
-`dep-stage.apk` and `pso-stage.apk` are intentionally ignored by Git because
-APKs exceed GitHub's 100 MB file limit. Deploy them to Netlify from the local
-artifacts instead of committing.
-
-## Direct install URLs
-
-iOS:
-
-```text
-itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/manifest.plist
-itms-services://?action=download-manifest&url=https://bezzy-stream-v3-app-install.netlify.app/pso-manifest.plist
-```
-
-Android APK:
-
-```text
-https://bezzy-stream-v3-app-install.netlify.app/dep-stage.apk
-https://bezzy-stream-v3-app-install.netlify.app/pso-stage.apk
-```
+APKs (`*-stage.apk`) are git-ignored (exceed GitHub's 100 MB limit) and deploy to
+Netlify from the local artifacts via `netlify deploy --prod --dir .`.
 
 ## iOS enterprise trust
 
-First-time iOS enterprise installs require testers to trust
-`Healthline Networks, Inc.` in iOS Settings:
+First install requires trusting `Healthline Networks, Inc.` in
+Settings > General > VPN & Device Management. Trust is per device, not per app.
 
-```text
-Settings > General > VPN & Device Management > Enterprise App > Healthline Networks, Inc. > Trust
+## Deploy
+
 ```
-
-Trust is per device, not per app, so trusting once covers both Bezzy apps on
-the same device.
-
-## Android side-loading
-
-Android may require testers to allow the browser to install unknown apps the
-first time. There is no enterprise-trust step for the APK path.
-
-## Open links
-
-iOS does not allow OTA installs to open the app automatically. The page
-includes manual deep links for use after install and trust are complete:
-
-- `dephealthline://`
-- `psohealthline://`
+git add <ipas> index.html *-manifest.plist *-display-image.png *-full-size-image.png _headers .gitignore README.md
+git commit -m "..."
+git push
+netlify deploy --prod --dir . --no-build
+```
