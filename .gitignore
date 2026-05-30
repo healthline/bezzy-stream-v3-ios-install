@@ -4,3 +4,9 @@
 # Android APKs are deployed to Netlify from local artifacts.
 # GitHub rejects these APKs because they exceed the 100 MB file limit.
 *-stage.apk
+
+# iOS IPAs are deployed to Netlify from local artifacts, same as the APKs.
+# Each rebuild is ~60 MB x 10 apps; committing them grows .git history
+# unbounded (git keeps every blob version). Netlify `deploy --dir .` picks
+# them up from disk regardless of git tracking.
+*-release.ipa
