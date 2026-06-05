@@ -332,13 +332,13 @@
 
     <script>
       // Single build timestamp for this rollout.
-      const BUILD_UPDATED_AT = "2026-06-02T22:57:55Z";
+      const BUILD_UPDATED_AT = "2026-06-05T20:11:06Z";
 
       // All 10 Bezzy stage apps. scheme:null when the app has no usable
       // custom URL scheme (copd's Info.plist carries a wrong scheme; msbuddy
       // has none) — those omit the "Open app" convenience link.
       const APPS = [
-        { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  version: "14.6.1 (900724)", manifest: "manifest.plist",         apk: "dep-stage.apk",     icon: "display-image.png",         scheme: "dephealthline" },
+        { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  version: "15.0 (900724)", manifest: "manifest.plist",         apk: "dep-stage.apk",     icon: "display-image.png",         scheme: "dephealthline" },
         { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  version: "14.6.1 (900751)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk",     icon: "pso-display-image.png",     scheme: "psohealthline" },
         { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   version: "14.6.1 (900719)", manifest: "bcbuddy-manifest.plist", apk: "bcbuddy-stage.apk", icon: "bcbuddy-display-image.png", scheme: "bchealthline" },
         { id: "copd",    name: "Bezzy COPD",                      bundleId: "com.healthline.copd-stage", version: "14.6.1 (626)",    manifest: "copd-manifest.plist",    apk: "copd-stage.apk",    icon: "copd-display-image.png",    scheme: null },
