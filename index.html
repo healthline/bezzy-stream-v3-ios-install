@@ -332,22 +332,22 @@
 
     <script>
       // Single build timestamp for this rollout.
-      const BUILD_UPDATED_AT = "2026-06-05T20:11:06Z";
+      const BUILD_UPDATED_AT = "2026-06-05T21:03:53Z";
 
       // All 10 Bezzy stage apps. scheme:null when the app has no usable
       // custom URL scheme (copd's Info.plist carries a wrong scheme; msbuddy
       // has none) — those omit the "Open app" convenience link.
       const APPS = [
         { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  version: "15.0 (900724)", manifest: "manifest.plist",         apk: "dep-stage.apk",     icon: "display-image.png",         scheme: "dephealthline" },
-        { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  version: "14.6.1 (900751)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk",     icon: "pso-display-image.png",     scheme: "psohealthline" },
-        { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   version: "14.6.1 (900719)", manifest: "bcbuddy-manifest.plist", apk: "bcbuddy-stage.apk", icon: "bcbuddy-display-image.png", scheme: "bchealthline" },
-        { id: "copd",    name: "Bezzy COPD",                      bundleId: "com.healthline.copd-stage", version: "14.6.1 (626)",    manifest: "copd-manifest.plist",    apk: "copd-stage.apk",    icon: "copd-display-image.png",    scheme: null },
-        { id: "ibd",     name: "Bezzy IBD (Crohn's & Colitis)",   bundleId: "com.healthline.ibd-stage",  version: "14.6.1 (900721)", manifest: "ibd-manifest.plist",     apk: "ibd-stage.apk",     icon: "ibd-display-image.png",     scheme: "ibdhealthline" },
-        { id: "mig",     name: "Bezzy Migraine",                  bundleId: "com.healthline.mig-stage",  version: "14.6.1 (900730)", manifest: "mig-manifest.plist",     apk: "mig-stage.apk",     icon: "mig-display-image.png",     scheme: "mighealthline" },
-        { id: "msbuddy", name: "Bezzy MS: Multiple Sclerosis",    bundleId: "com.healthline.ms-stage",   version: "14.6.1 (900749)", manifest: "msbuddy-manifest.plist", apk: "msbuddy-stage.apk", icon: "msbuddy-display-image.png", scheme: null },
-        { id: "psa",     name: "Bezzy Psoriatic Arthritis",       bundleId: "com.healthline.psa-stage",  version: "14.6.1 (900731)", manifest: "psa-manifest.plist",     apk: "psa-stage.apk",     icon: "psa-display-image.png",     scheme: "psahealthline" },
-        { id: "ra",      name: "Bezzy RA: Rheumatoid Arthritis",  bundleId: "com.healthline.ra-stage",   version: "14.6.1 (900730)", manifest: "ra-manifest.plist",      apk: "ra-stage.apk",      icon: "ra-display-image.png",      scheme: "rahealthline" },
-        { id: "t2d",     name: "Bezzy Type 2 Diabetes",           bundleId: "com.healthline.t2d-stage",  version: "14.6.1 (900720)", manifest: "t2d-manifest.plist",     apk: "t2d-stage.apk",     icon: "t2d-display-image.png",     scheme: "t2dhealthline" },
+        { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  version: "15.0 (900752)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk",     icon: "pso-display-image.png",     scheme: "psohealthline" },
+        { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   version: "15.0 (900720)", manifest: "bcbuddy-manifest.plist", apk: "bcbuddy-stage.apk", icon: "bcbuddy-display-image.png", scheme: "bchealthline" },
+        { id: "copd",    name: "Bezzy COPD",                      bundleId: "com.healthline.copd-stage", version: "15.0 (627)",    manifest: "copd-manifest.plist",    apk: "copd-stage.apk",    icon: "copd-display-image.png",    scheme: null },
+        { id: "ibd",     name: "Bezzy IBD (Crohn's & Colitis)",   bundleId: "com.healthline.ibd-stage",  version: "15.0 (900722)", manifest: "ibd-manifest.plist",     apk: "ibd-stage.apk",     icon: "ibd-display-image.png",     scheme: "ibdhealthline" },
+        { id: "mig",     name: "Bezzy Migraine",                  bundleId: "com.healthline.mig-stage",  version: "15.0 (900731)", manifest: "mig-manifest.plist",     apk: "mig-stage.apk",     icon: "mig-display-image.png",     scheme: "mighealthline" },
+        { id: "msbuddy", name: "Bezzy MS: Multiple Sclerosis",    bundleId: "com.healthline.ms-stage",   version: "15.0 (900750)", manifest: "msbuddy-manifest.plist", apk: "msbuddy-stage.apk", icon: "msbuddy-display-image.png", scheme: null },
+        { id: "psa",     name: "Bezzy Psoriatic Arthritis",       bundleId: "com.healthline.psa-stage",  version: "15.0 (900732)", manifest: "psa-manifest.plist",     apk: "psa-stage.apk",     icon: "psa-display-image.png",     scheme: "psahealthline" },
+        { id: "ra",      name: "Bezzy RA: Rheumatoid Arthritis",  bundleId: "com.healthline.ra-stage",   version: "15.0 (900731)", manifest: "ra-manifest.plist",      apk: "ra-stage.apk",      icon: "ra-display-image.png",      scheme: "rahealthline" },
+        { id: "t2d",     name: "Bezzy Type 2 Diabetes",           bundleId: "com.healthline.t2d-stage",  version: "15.0 (900721)", manifest: "t2d-manifest.plist",     apk: "t2d-stage.apk",     icon: "t2d-display-image.png",     scheme: "t2dhealthline" },
       ];
 
       const BASE = "https://bezzy-stream-v3-app-install.netlify.app";
