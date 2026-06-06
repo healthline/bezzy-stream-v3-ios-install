@@ -73,6 +73,40 @@
         color: var(--muted);
       }
 
+      .lane-toggle {
+        display: flex;
+        margin: 16px auto 0;
+        max-width: 360px;
+        padding: 4px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--soft);
+      }
+
+      .lane-btn {
+        flex: 1 1 0;
+        min-height: 40px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .lane-btn.is-active {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .lane-note {
+        margin: 10px 0 0;
+        min-height: 1.2em;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
       .filter {
         width: 100%;
         margin-top: 14px;
@@ -318,6 +352,11 @@
       <header class="page-header">
         <h1>Bezzy Stage Installs</h1>
         <p>Stage builds for authorized internal testing.</p>
+        <div class="lane-toggle" role="tablist" aria-label="Build version">
+          <button type="button" class="lane-btn is-active" role="tab" data-lane="v3" aria-selected="true">v3 (new)</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">v2 (current)</button>
+        </div>
+        <p id="lane-note" class="lane-note"></p>
         <input
           id="app-filter"
           class="filter"
@@ -337,18 +376,37 @@
       // All 10 Bezzy stage apps. scheme:null when the app has no usable
       // custom URL scheme (copd's Info.plist carries a wrong scheme; msbuddy
       // has none) — those omit the "Open app" convenience link.
+      //
+      // Each app carries two build "lanes": v3 (the new Stream-migration build)
+      // and v2 (the current production build, pre-migration). A lane is null
+      // when that build hasn't been published yet. Both lanes share the same
+      // bundle id, so only one can be installed on a device at a time.
       const APPS = [
-        { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  version: "15.0 (900724)", manifest: "manifest.plist",         apk: "dep-stage.apk",     icon: "display-image.png",         scheme: "dephealthline" },
-        { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  version: "15.0 (900752)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk",     icon: "pso-display-image.png",     scheme: "psohealthline" },
-        { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   version: "15.0 (900720)", manifest: "bcbuddy-manifest.plist", apk: "bcbuddy-stage.apk", icon: "bcbuddy-display-image.png", scheme: "bchealthline" },
-        { id: "copd",    name: "Bezzy COPD",                      bundleId: "com.healthline.copd-stage", version: "15.0 (627)",    manifest: "copd-manifest.plist",    apk: "copd-stage.apk",    icon: "copd-display-image.png",    scheme: null },
-        { id: "ibd",     name: "Bezzy IBD (Crohn's & Colitis)",   bundleId: "com.healthline.ibd-stage",  version: "15.0 (900722)", manifest: "ibd-manifest.plist",     apk: "ibd-stage.apk",     icon: "ibd-display-image.png",     scheme: "ibdhealthline" },
-        { id: "mig",     name: "Bezzy Migraine",                  bundleId: "com.healthline.mig-stage",  version: "15.0 (900731)", manifest: "mig-manifest.plist",     apk: "mig-stage.apk",     icon: "mig-display-image.png",     scheme: "mighealthline" },
-        { id: "msbuddy", name: "Bezzy MS: Multiple Sclerosis",    bundleId: "com.healthline.ms-stage",   version: "15.0 (900750)", manifest: "msbuddy-manifest.plist", apk: "msbuddy-stage.apk", icon: "msbuddy-display-image.png", scheme: null },
-        { id: "psa",     name: "Bezzy Psoriatic Arthritis",       bundleId: "com.healthline.psa-stage",  version: "15.0 (900732)", manifest: "psa-manifest.plist",     apk: "psa-stage.apk",     icon: "psa-display-image.png",     scheme: "psahealthline" },
-        { id: "ra",      name: "Bezzy RA: Rheumatoid Arthritis",  bundleId: "com.healthline.ra-stage",   version: "15.0 (900731)", manifest: "ra-manifest.plist",      apk: "ra-stage.apk",      icon: "ra-display-image.png",      scheme: "rahealthline" },
-        { id: "t2d",     name: "Bezzy Type 2 Diabetes",           bundleId: "com.healthline.t2d-stage",  version: "15.0 (900721)", manifest: "t2d-manifest.plist",     apk: "t2d-stage.apk",     icon: "t2d-display-image.png",     scheme: "t2dhealthline" },
+        { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  icon: "display-image.png",         scheme: "dephealthline",
+          v3: { version: "15.0 (900724)", manifest: "manifest.plist",         apk: "dep-stage.apk" },
+          v2: { version: "14.6.1 (current prod)", manifest: "dep-v2-manifest.plist", apk: "dep-v2-stage.apk" } },
+        { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  icon: "pso-display-image.png",     scheme: "psohealthline",
+          v3: { version: "15.0 (900752)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk" }, v2: null },
+        { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   icon: "bcbuddy-display-image.png", scheme: "bchealthline",
+          v3: { version: "15.0 (900720)", manifest: "bcbuddy-manifest.plist", apk: "bcbuddy-stage.apk" }, v2: null },
+        { id: "copd",    name: "Bezzy COPD",                      bundleId: "com.healthline.copd-stage", icon: "copd-display-image.png",    scheme: null,
+          v3: { version: "15.0 (627)",    manifest: "copd-manifest.plist",    apk: "copd-stage.apk" }, v2: null },
+        { id: "ibd",     name: "Bezzy IBD (Crohn's & Colitis)",   bundleId: "com.healthline.ibd-stage",  icon: "ibd-display-image.png",     scheme: "ibdhealthline",
+          v3: { version: "15.0 (900722)", manifest: "ibd-manifest.plist",     apk: "ibd-stage.apk" }, v2: null },
+        { id: "mig",     name: "Bezzy Migraine",                  bundleId: "com.healthline.mig-stage",  icon: "mig-display-image.png",     scheme: "mighealthline",
+          v3: { version: "15.0 (900731)", manifest: "mig-manifest.plist",     apk: "mig-stage.apk" }, v2: null },
+        { id: "msbuddy", name: "Bezzy MS: Multiple Sclerosis",    bundleId: "com.healthline.ms-stage",   icon: "msbuddy-display-image.png", scheme: null,
+          v3: { version: "15.0 (900750)", manifest: "msbuddy-manifest.plist", apk: "msbuddy-stage.apk" }, v2: null },
+        { id: "psa",     name: "Bezzy Psoriatic Arthritis",       bundleId: "com.healthline.psa-stage",  icon: "psa-display-image.png",     scheme: "psahealthline",
+          v3: { version: "15.0 (900732)", manifest: "psa-manifest.plist",     apk: "psa-stage.apk" }, v2: null },
+        { id: "ra",      name: "Bezzy RA: Rheumatoid Arthritis",  bundleId: "com.healthline.ra-stage",   icon: "ra-display-image.png",      scheme: "rahealthline",
+          v3: { version: "15.0 (900731)", manifest: "ra-manifest.plist",      apk: "ra-stage.apk" }, v2: null },
+        { id: "t2d",     name: "Bezzy Type 2 Diabetes",           bundleId: "com.healthline.t2d-stage",  icon: "t2d-display-image.png",     scheme: "t2dhealthline",
+          v3: { version: "15.0 (900721)", manifest: "t2d-manifest.plist",     apk: "t2d-stage.apk" }, v2: null },
       ];
+
+      // Active build lane; flipped by the v3/v2 toggle.
+      let CURRENT_LANE = "v3";
 
       const BASE = "https://bezzy-stream-v3-app-install.netlify.app";
 
@@ -358,8 +416,10 @@
         }[c]));
       }
 
-      function appPanel(app) {
+      function appPanel(app, lane) {
+        const b = app[lane];
         const name = esc(app.name);
+        const laneLabel = lane === "v3" ? "v3 (Stream migration)" : "v2 (current prod)";
         const openLink = app.scheme
           ? `<div class="secondary-actions">
                <a class="install secondary" href="${app.scheme}://">Open iOS app</a>
@@ -371,7 +431,7 @@
             <img class="app-icon" src="./${app.icon}" alt="" />
             <div>
               <h1>${name}</h1>
-              <p class="meta">Stage build</p>
+              <p class="meta">Stage build · ${laneLabel}</p>
               <p class="meta"><code>${esc(app.bundleId)}</code></p>
             </div>
           </div>
@@ -383,7 +443,7 @@
             </div>
             <div class="build-detail">
               <span class="label">Version</span>
-              <strong>${esc(app.version)}</strong>
+              <strong>${esc(b.version)}</strong>
             </div>
           </div>
 
@@ -398,12 +458,12 @@
                 <span class="platform-pill">iOS</span>
               </div>
               <div class="platform-meta">
-                <p><strong>Version:</strong> ${esc(app.version)}</p>
+                <p><strong>Version:</strong> ${esc(b.version)}</p>
                 <p><strong>Last update:</strong>
                   <time data-last-updated-at="${BUILD_UPDATED_AT}">${BUILD_UPDATED_AT}</time>
                 </p>
               </div>
-              <a class="install" href="itms-services://?action=download-manifest&url=${BASE}/${app.manifest}">Install on iOS</a>
+              <a class="install" href="itms-services://?action=download-manifest&url=${BASE}/${b.manifest}">Install on iOS</a>
               ${openLink}
               <details class="instructions">
                 <summary>iOS installation instructions</summary>
@@ -438,7 +498,7 @@
                   <time data-last-updated-at="${BUILD_UPDATED_AT}">${BUILD_UPDATED_AT}</time>
                 </p>
               </div>
-              <a class="install android" href="./${app.apk}" download>Download Android APK</a>
+              <a class="install android" href="./${b.apk}" download>Download Android APK</a>
               <details class="instructions">
                 <summary>Android installation instructions</summary>
                 <ol class="steps">
@@ -512,9 +572,39 @@
         });
       }
 
-      document.getElementById("app-list").innerHTML = APPS.map(appPanel).join("");
-      renderLastUpdated();
-      markRecommendedPlatform();
+      const LANE_NOTES = {
+        v3: "New Stream-migration build.",
+        v2: "Current production build (pre-migration). Shares the v3 bundle id, so installing one replaces the other.",
+      };
+
+      function render() {
+        const lane = CURRENT_LANE;
+        const apps = APPS.filter((a) => a[lane]);
+        const list = document.getElementById("app-list");
+        list.innerHTML = apps.length
+          ? apps.map((a) => appPanel(a, lane)).join("")
+          : `<section class="panel"><p class="meta">No ${lane} builds published yet.</p></section>`;
+        const missing = APPS.length - apps.length;
+        document.getElementById("lane-note").textContent =
+          LANE_NOTES[lane] + (missing > 0 ? ` ${apps.length} of ${APPS.length} apps available.` : "");
+        renderLastUpdated();
+        markRecommendedPlatform();
+        applyFilter(document.getElementById("app-filter").value || "");
+      }
+
+      document.querySelectorAll(".lane-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          CURRENT_LANE = btn.dataset.lane;
+          document.querySelectorAll(".lane-btn").forEach((b) => {
+            const on = b === btn;
+            b.classList.toggle("is-active", on);
+            b.setAttribute("aria-selected", on ? "true" : "false");
+          });
+          render();
+        });
+      });
+
+      render();
       window.setInterval(renderLastUpdated, 30 * 1000);
       document
         .getElementById("app-filter")
