@@ -355,6 +355,7 @@
         <div class="lane-toggle" role="tablist" aria-label="Build version">
           <button type="button" class="lane-btn is-active" role="tab" data-lane="v3" aria-selected="true">v3 (new)</button>
           <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">v2 (current)</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="prod" aria-selected="false">v3 prod</button>
         </div>
         <p id="lane-note" class="lane-note"></p>
         <input
@@ -371,7 +372,7 @@
 
     <script>
       // Single build timestamp for this rollout.
-      const BUILD_UPDATED_AT = "2026-06-08T21:37:38Z";
+      const BUILD_UPDATED_AT = "2026-06-10T19:31:40Z";
 
       // All 10 Bezzy stage apps. scheme:null when the app has no usable
       // custom URL scheme (copd's Info.plist carries a wrong scheme; msbuddy
@@ -384,7 +385,8 @@
       const APPS = [
         { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  icon: "display-image.png",         scheme: "dephealthline",
           v3: { version: "15.0 (900724)", manifest: "manifest.plist",         apk: "dep-stage.apk" },
-          v2: { version: "14.6.1 (current prod)", manifest: "dep-v2-manifest.plist", apk: "dep-v2-stage.apk" } },
+          v2: { version: "14.6.1 (current prod)", manifest: "dep-v2-manifest.plist", apk: "dep-v2-stage.apk" },
+          prod: { version: "15.0 (900725) · PROD backend", manifest: "dep-prod-manifest.plist", apk: "dep-prod-stage.apk" } },
         { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  icon: "pso-display-image.png",     scheme: "psohealthline",
           v3: { version: "15.0 (900752)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk" }, v2: { version: "14.6.1 (current prod)", manifest: "pso-v2-manifest.plist", apk: "pso-v2-stage.apk" } },
         { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   icon: "bcbuddy-display-image.png", scheme: "bchealthline",
@@ -419,7 +421,7 @@
       function appPanel(app, lane) {
         const b = app[lane];
         const name = esc(app.name);
-        const laneLabel = lane === "v3" ? "v3 (Stream migration)" : "v2 (current prod)";
+        const laneLabel = lane === "v3" ? "v3 (Stream migration · stage backend)" : lane === "prod" ? "v3 · PRODUCTION backend" : "v2 (current prod)";
         const openLink = app.scheme
           ? `<div class="secondary-actions">
                <a class="install secondary" href="${app.scheme}://">Open iOS app</a>
@@ -573,8 +575,9 @@
       }
 
       const LANE_NOTES = {
-        v3: "New Stream-migration build.",
+        v3: "New Stream-migration build, stage backend.",
         v2: "Current production build (pre-migration). Shares the v3 bundle id, so installing one replaces the other.",
+        prod: "⚠️ v3 build pointed at the LIVE PRODUCTION backend. Posts, reactions, and edits land in real production communities. Internal validation only. Shares the bundle id with the other lanes — installing one replaces the other.",
       };
 
       function render() {
