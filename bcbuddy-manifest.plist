@@ -35,7 +35,7 @@
 				<key>bundle-identifier</key>
 				<string>com.healthline.bc-stage</string>
 				<key>bundle-version</key>
-				<string>900720</string>
+				<string>900721</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
