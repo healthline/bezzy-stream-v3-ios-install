@@ -481,6 +481,7 @@
         const b = app[lane];
         const name = esc(app.name);
         const meta = LANE_META[lane];
+        const laneUpdated = (meta && meta.updated) || BUILD_UPDATED_AT;
         const openLink = app.scheme
           ? `<div class="secondary-actions">
                <a class="install secondary" href="${app.scheme}://">Open iOS app</a>
@@ -522,7 +523,7 @@
               <div class="platform-meta">
                 <p><strong>Version:</strong> ${esc(b.version)}</p>
                 <p><strong>Last update:</strong>
-                  <time data-last-updated-at="${BUILD_UPDATED_AT}">${BUILD_UPDATED_AT}</time>
+                  <time data-last-updated-at="${laneUpdated}">${laneUpdated}</time>
                 </p>
               </div>
               <a class="install" href="itms-services://?action=download-manifest&url=${BASE}/${b.manifest}">Install on iOS</a>
@@ -557,7 +558,7 @@
               <div class="platform-meta">
                 <p><strong>Build:</strong> Android APK</p>
                 <p><strong>Last update:</strong>
-                  <time data-last-updated-at="${BUILD_UPDATED_AT}">${BUILD_UPDATED_AT}</time>
+                  <time data-last-updated-at="${laneUpdated}">${laneUpdated}</time>
                 </p>
               </div>
               <a class="install android" href="./${b.apk}" download>Download Android APK</a>
@@ -645,6 +646,7 @@
           build: "New app · internal test backend",
           title: "Bezzy — New app (test)",
           subtitle: "The new Bezzy app on the internal test backend.",
+          updated: "2026-06-17T05:19:00Z",
         },
         v2: {
           tab: "Current app",
@@ -652,6 +654,7 @@
           build: "The app that's live in the App Store today",
           title: "Bezzy — Current app",
           subtitle: "The app currently live in the App Store, before the update.",
+          updated: "2026-06-06T15:14:00Z",
         },
         prod: {
           tab: "New app · LIVE",
@@ -659,6 +662,7 @@
           build: "New app · connects to your real community",
           title: "Bezzy — New app (live community)",
           subtitle: "⚠️ The new app, connected to your real community.",
+          updated: "2026-06-10T22:47:35Z",
         },
       };
 
