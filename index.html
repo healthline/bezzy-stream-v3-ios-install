@@ -117,7 +117,8 @@
         font-size: 0.9rem;
       }
 
-      .lane-btn[data-lane="prod"].is-active {
+      .lane-btn[data-lane="prod"].is-active,
+      .lane-btn[data-lane="v2prod"].is-active {
         background: var(--danger-strong);
       }
 
@@ -126,7 +127,8 @@
         font-weight: 600;
       }
 
-      .panel.lane-prod {
+      .panel.lane-prod,
+      .panel.lane-v2prod {
         border-color: var(--danger-border);
         border-left-width: 5px;
       }
@@ -145,7 +147,8 @@
         border: 1px solid var(--border);
       }
 
-      .panel.lane-prod .env-badge {
+      .panel.lane-prod .env-badge,
+      .panel.lane-v2prod .env-badge {
         background: var(--danger-soft);
         color: var(--danger);
         border-color: var(--danger-border);
@@ -402,8 +405,9 @@
         <p id="page-subtitle">Builds for authorized internal testing.</p>
         <div class="lane-toggle" role="tablist" aria-label="Build version">
           <button type="button" class="lane-btn" role="tab" data-lane="v3" aria-selected="false">New app · test</button>
-          <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">Current app</button>
           <button type="button" class="lane-btn is-active" role="tab" data-lane="prod" aria-selected="true">New app · LIVE</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">Current app · test</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="v2prod" aria-selected="false">Current app · LIVE</button>
         </div>
         <p id="lane-note" class="lane-note"></p>
         <input
@@ -434,34 +438,34 @@
         { id: "dep",     name: "Bezzy Depression",                bundleId: "com.healthline.dep-stage",  icon: "display-image.png",         scheme: "dephealthline",
           v3: { version: "15.0 (900724)", manifest: "manifest.plist",         apk: "dep-stage.apk" },
           v2: { version: "14.6.1", manifest: "dep-v2-manifest.plist", apk: "dep-v2-stage.apk" },
-          prod: { version: "15.0 (900725)", manifest: "dep-prod-manifest.plist", apk: "dep-prod-stage.apk" } },
+          prod: { version: "15.0 (900725)", manifest: "dep-prod-manifest.plist", apk: "dep-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "dep-v2-prod-manifest.plist", apk: "dep-v2-prod-stage.apk" } },
         { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  icon: "pso-display-image.png",     scheme: "psohealthline",
           v3: { version: "15.0 (900752)", manifest: "pso-manifest.plist",     apk: "pso-stage.apk" }, v2: { version: "14.6.1", manifest: "pso-v2-manifest.plist", apk: "pso-v2-stage.apk" },
-          prod: { version: "15.0 (900753)", manifest: "pso-prod-manifest.plist", apk: "pso-prod-stage.apk" } },
+          prod: { version: "15.0 (900753)", manifest: "pso-prod-manifest.plist", apk: "pso-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "pso-v2-prod-manifest.plist", apk: "pso-v2-prod-stage.apk" } },
         { id: "bcbuddy", name: "Bezzy Breast Cancer",             bundleId: "com.healthline.bc-stage",   icon: "bcbuddy-display-image.png", scheme: "bchealthline",
           v3: { version: "15.0 (900720)", manifest: "bcbuddy-manifest.plist", apk: "bcbuddy-stage.apk" }, v2: { version: "14.6.1", manifest: "bcbuddy-v2-manifest.plist", apk: "bcbuddy-v2-stage.apk" },
-          prod: { version: "15.0 (900721)", manifest: "bcbuddy-prod-manifest.plist", apk: "bcbuddy-prod-stage.apk" } },
+          prod: { version: "15.0 (900721)", manifest: "bcbuddy-prod-manifest.plist", apk: "bcbuddy-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "bcbuddy-v2-prod-manifest.plist", apk: "bcbuddy-v2-prod-stage.apk" } },
         { id: "copd",    name: "Bezzy COPD",                      bundleId: "com.healthline.copd-stage", icon: "copd-display-image.png",    scheme: null,
           v3: { version: "15.0 (627)",    manifest: "copd-manifest.plist",    apk: "copd-stage.apk" }, v2: { version: "14.6.1", manifest: "copd-v2-manifest.plist", apk: "copd-v2-stage.apk" },
-          prod: { version: "15.0 (628)", manifest: "copd-prod-manifest.plist", apk: "copd-prod-stage.apk" } },
+          prod: { version: "15.0 (628)", manifest: "copd-prod-manifest.plist", apk: "copd-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "copd-v2-prod-manifest.plist", apk: "copd-v2-prod-stage.apk" } },
         { id: "ibd",     name: "Bezzy IBD (Crohn's & Colitis)",   bundleId: "com.healthline.ibd-stage",  icon: "ibd-display-image.png",     scheme: "ibdhealthline",
           v3: { version: "15.0 (900722)", manifest: "ibd-manifest.plist",     apk: "ibd-stage.apk" }, v2: { version: "14.6.1", manifest: "ibd-v2-manifest.plist", apk: "ibd-v2-stage.apk" },
-          prod: { version: "15.0 (900723)", manifest: "ibd-prod-manifest.plist", apk: "ibd-prod-stage.apk" } },
+          prod: { version: "15.0 (900723)", manifest: "ibd-prod-manifest.plist", apk: "ibd-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "ibd-v2-prod-manifest.plist", apk: "ibd-v2-prod-stage.apk" } },
         { id: "mig",     name: "Bezzy Migraine",                  bundleId: "com.healthline.mig-stage",  icon: "mig-display-image.png",     scheme: "mighealthline",
           v3: { version: "15.0 (900731)", manifest: "mig-manifest.plist",     apk: "mig-stage.apk" }, v2: { version: "14.6.1", manifest: "mig-v2-manifest.plist", apk: "mig-v2-stage.apk" },
-          prod: { version: "15.0 (900732)", manifest: "mig-prod-manifest.plist", apk: "mig-prod-stage.apk" } },
+          prod: { version: "15.0 (900732)", manifest: "mig-prod-manifest.plist", apk: "mig-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "mig-v2-prod-manifest.plist", apk: "mig-v2-prod-stage.apk" } },
         { id: "msbuddy", name: "Bezzy MS: Multiple Sclerosis",    bundleId: "com.healthline.ms-stage",   icon: "msbuddy-display-image.png", scheme: null,
           v3: { version: "15.0 (900750)", manifest: "msbuddy-manifest.plist", apk: "msbuddy-stage.apk" }, v2: { version: "14.6.1", manifest: "msbuddy-v2-manifest.plist", apk: "msbuddy-v2-stage.apk" },
-          prod: { version: "15.0 (900751)", manifest: "msbuddy-prod-manifest.plist", apk: "msbuddy-prod-stage.apk" } },
+          prod: { version: "15.0 (900751)", manifest: "msbuddy-prod-manifest.plist", apk: "msbuddy-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "msbuddy-v2-prod-manifest.plist", apk: "msbuddy-v2-prod-stage.apk" } },
         { id: "psa",     name: "Bezzy Psoriatic Arthritis",       bundleId: "com.healthline.psa-stage",  icon: "psa-display-image.png",     scheme: "psahealthline",
           v3: { version: "15.0 (900732)", manifest: "psa-manifest.plist",     apk: "psa-stage.apk" }, v2: { version: "14.6.1", manifest: "psa-v2-manifest.plist", apk: "psa-v2-stage.apk" },
-          prod: { version: "15.0 (900733)", manifest: "psa-prod-manifest.plist", apk: "psa-prod-stage.apk" } },
+          prod: { version: "15.0 (900733)", manifest: "psa-prod-manifest.plist", apk: "psa-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "psa-v2-prod-manifest.plist", apk: "psa-v2-prod-stage.apk" } },
         { id: "ra",      name: "Bezzy RA: Rheumatoid Arthritis",  bundleId: "com.healthline.ra-stage",   icon: "ra-display-image.png",      scheme: "rahealthline",
           v3: { version: "15.0 (900731)", manifest: "ra-manifest.plist",      apk: "ra-stage.apk" }, v2: { version: "14.6.1", manifest: "ra-v2-manifest.plist", apk: "ra-v2-stage.apk" },
-          prod: { version: "15.0 (900732)", manifest: "ra-prod-manifest.plist", apk: "ra-prod-stage.apk" } },
+          prod: { version: "15.0 (900732)", manifest: "ra-prod-manifest.plist", apk: "ra-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "ra-v2-prod-manifest.plist", apk: "ra-v2-prod-stage.apk" } },
         { id: "t2d",     name: "Bezzy Type 2 Diabetes",           bundleId: "com.healthline.t2d-stage",  icon: "t2d-display-image.png",     scheme: "t2dhealthline",
           v3: { version: "15.0 (900721)", manifest: "t2d-manifest.plist",     apk: "t2d-stage.apk" }, v2: { version: "14.6.1", manifest: "t2d-v2-manifest.plist", apk: "t2d-v2-stage.apk" },
-          prod: { version: "15.0 (900722)", manifest: "t2d-prod-manifest.plist", apk: "t2d-prod-stage.apk" } },
+          prod: { version: "15.0 (900722)", manifest: "t2d-prod-manifest.plist", apk: "t2d-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "t2d-v2-prod-manifest.plist", apk: "t2d-v2-prod-stage.apk" } },
       ];
 
       // Active build lane; flipped by the lane toggle. Defaults to the v3
@@ -502,7 +506,7 @@
           <div class="build-summary" aria-label="Build details">
             <div class="build-detail">
               <span class="label">Environment</span>
-              <strong class="${lane === "prod" ? "lane-prod-env" : ""}">${esc(meta.env)}</strong>
+              <strong class="${(lane === "prod" || lane === "v2prod") ? "lane-prod-env" : ""}">${esc(meta.env)}</strong>
             </div>
             <div class="build-detail">
               <span class="label">Version</span>
@@ -649,12 +653,20 @@
           updated: "2026-06-17T05:19:00Z",
         },
         v2: {
-          tab: "Current app",
-          env: "Current app",
-          build: "The app that's live in the App Store today",
-          title: "Bezzy — Current app",
-          subtitle: "The app currently live in the App Store, before the update.",
+          tab: "Current app · test",
+          env: "Test",
+          build: "Current App Store app · internal test backend",
+          title: "Bezzy — Current app (test)",
+          subtitle: "The app currently live in the App Store, on the internal test backend.",
           updated: "2026-06-06T15:14:00Z",
+        },
+        v2prod: {
+          tab: "Current app · LIVE",
+          env: "Live community",
+          build: "Current App Store app · connects to your real community",
+          title: "Bezzy — Current app (live community)",
+          subtitle: "⚠️ The app currently live in the App Store, connected to your real community.",
+          updated: "2026-06-18T17:00:00Z",
         },
         prod: {
           tab: "New app · LIVE",
@@ -668,8 +680,9 @@
 
       const LANE_NOTES = {
         v3: "The new app pointed at the internal test backend — safe to post, nothing reaches real members.",
-        v2: "The app currently live in the App Store, before the update. Shares the same install slot, so installing it replaces the new app.",
-        prod: "⚠️ This is the new app connected to your REAL community — posts, reactions, and edits are seen by real members. For authorized testing only. All three builds share one install slot, so installing a different one replaces this.",
+        v2: "The current App Store app pointed at the internal test backend — safe to post, nothing reaches real members. Shares one install slot with the other lanes.",
+        prod: "⚠️ This is the new app connected to your REAL community — posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot, so installing a different one replaces this.",
+        v2prod: "⚠️ This is the current App Store app (pre-update) connected to your REAL community — this is what users who haven't updated are running. Posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot.",
       };
 
       function render() {
@@ -684,7 +697,7 @@
           : `<section class="panel"><p class="meta">No ${lane} builds published yet.</p></section>`;
         const missing = APPS.length - apps.length;
         const note = document.getElementById("lane-note");
-        note.classList.toggle("is-prod", lane === "prod");
+        note.classList.toggle("is-prod", lane === "prod" || lane === "v2prod");
         note.textContent =
           LANE_NOTES[lane] + (missing > 0 ? ` ${apps.length} of ${APPS.length} apps available.` : "");
         renderLastUpdated();
