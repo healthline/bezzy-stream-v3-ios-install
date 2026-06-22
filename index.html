@@ -404,10 +404,10 @@
         <h1 id="page-title">Bezzy Installs</h1>
         <p id="page-subtitle">Builds for authorized internal testing.</p>
         <div class="lane-toggle" role="tablist" aria-label="Build version">
-          <button type="button" class="lane-btn" role="tab" data-lane="v3" aria-selected="false">New app · test</button>
-          <button type="button" class="lane-btn is-active" role="tab" data-lane="prod" aria-selected="true">New app · LIVE</button>
-          <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">Current app · test</button>
-          <button type="button" class="lane-btn" role="tab" data-lane="v2prod" aria-selected="false">Current app · LIVE</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="v3" aria-selected="false">v3 (stage)</button>
+          <button type="button" class="lane-btn is-active" role="tab" data-lane="prod" aria-selected="true">v3 (prod)</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">v2 (stage)</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="v2prod" aria-selected="false">v2 (prod)</button>
         </div>
         <p id="lane-note" class="lane-note"></p>
         <input
@@ -645,7 +645,7 @@
       // the page header per lane.
       const LANE_META = {
         v3: {
-          tab: "New app · test",
+          tab: "v3 (stage)",
           env: "Test",
           build: "New app · internal test backend",
           title: "Bezzy — New app (test)",
@@ -653,7 +653,7 @@
           updated: "2026-06-17T05:19:00Z",
         },
         v2: {
-          tab: "Current app · test",
+          tab: "v2 (stage)",
           env: "Test",
           build: "Current App Store app · internal test backend",
           title: "Bezzy — Current app (test)",
@@ -661,7 +661,7 @@
           updated: "2026-06-06T15:14:00Z",
         },
         v2prod: {
-          tab: "Current app · LIVE",
+          tab: "v2 (prod)",
           env: "Live community",
           build: "Current App Store app · connects to your real community",
           title: "Bezzy — Current app (live community)",
@@ -669,7 +669,7 @@
           updated: "2026-06-18T17:00:00Z",
         },
         prod: {
-          tab: "New app · LIVE",
+          tab: "v3 (prod)",
           env: "Live community",
           build: "New app · connects to your real community",
           title: "Bezzy — New app (live community)",
