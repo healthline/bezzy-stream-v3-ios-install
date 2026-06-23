@@ -35,7 +35,7 @@
 				<key>bundle-identifier</key>
 				<string>com.healthline.t2d-stage</string>
 				<key>bundle-version</key>
-				<string>900722</string>
+				<string>900724</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
