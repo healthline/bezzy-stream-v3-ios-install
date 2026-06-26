@@ -35,7 +35,7 @@
 				<key>bundle-identifier</key>
 				<string>com.healthline.ibd-stage</string>
 				<key>bundle-version</key>
-				<string>900725</string>
+				<string>900731</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
