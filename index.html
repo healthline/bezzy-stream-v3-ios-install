@@ -440,8 +440,7 @@
           v3: { version: "15.1.1", manifest: "manifest.plist",         apk: "dep-stage.apk" },
           v2: { version: "14.6.1", manifest: "dep-v2-manifest.plist", apk: "dep-v2-stage.apk" },
           prod: { version: "15.1.1", manifest: "dep-prod-manifest.plist", apk: "dep-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "dep-v2-prod-manifest.plist", apk: "dep-v2-prod-stage.apk" },
-          // Android-only preview build (no iOS manifest yet).
-          search: { version: "15.1.1", apk: "dep-stage-search-spike.apk" } },
+          search: { version: "15.1.1", manifest: "dep-search-preview-manifest.plist", apk: "dep-stage-search-spike.apk" } },
         { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  icon: "pso-display-image.png",     scheme: "psohealthline",
           v3: { version: "15.1.1", manifest: "pso-manifest.plist",     apk: "pso-stage.apk" }, v2: { version: "14.6.1", manifest: "pso-v2-manifest.plist", apk: "pso-v2-stage.apk" },
           prod: { version: "15.1.1", manifest: "pso-prod-manifest.plist", apk: "pso-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "pso-v2-prod-manifest.plist", apk: "pso-v2-prod-stage.apk" } },
@@ -685,7 +684,7 @@
           build: "Search preview · internal test backend",
           title: "Bezzy — Search preview (test)",
           subtitle: "An early preview of in-app search over posts, members, and articles, on the internal test backend.",
-          updated: "2026-07-12T17:03:50Z",
+          updated: "2026-07-12T17:26:22Z",
         },
       };
 
@@ -694,7 +693,7 @@
         v2: "The current App Store app pointed at the internal test backend — safe to post, nothing reaches real members. Shares one install slot with the other lanes.",
         prod: "⚠️ This is the new app connected to your REAL community — posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot, so installing a different one replaces this.",
         v2prod: "⚠️ This is the current App Store app (pre-update) connected to your REAL community — this is what users who haven't updated are running. Posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot.",
-        search: "An early preview of in-app search: search posts, members, and articles from the magnifying glass on the Home screen. Android only for now, Bezzy Depression only, on the internal test backend — safe to post, nothing reaches real members. Shares one install slot with the other lanes.",
+        search: "An early preview of in-app search: search posts, members, and articles from the magnifying glass on the Home screen. Bezzy Depression only, on the internal test backend — safe to post, nothing reaches real members. Shares one install slot with the other lanes.",
       };
 
       function render() {

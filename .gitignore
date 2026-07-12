@@ -10,3 +10,7 @@
 # unbounded (git keeps every blob version). Netlify `deploy --dir .` picks
 # them up from disk regardless of git tracking.
 *-release.ipa
+
+# Preview-lane binaries follow the same rule: deployed from disk, never committed.
+*-spike.apk
+*-spike.ipa
