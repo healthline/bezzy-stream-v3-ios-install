@@ -118,7 +118,8 @@
       }
 
       .lane-btn[data-lane="prod"].is-active,
-      .lane-btn[data-lane="v2prod"].is-active {
+      .lane-btn[data-lane="v2prod"].is-active,
+      .lane-btn[data-lane="searchprod"].is-active {
         background: var(--danger-strong);
       }
 
@@ -128,7 +129,8 @@
       }
 
       .panel.lane-prod,
-      .panel.lane-v2prod {
+      .panel.lane-v2prod,
+      .panel.lane-searchprod {
         border-color: var(--danger-border);
         border-left-width: 5px;
       }
@@ -148,7 +150,8 @@
       }
 
       .panel.lane-prod .env-badge,
-      .panel.lane-v2prod .env-badge {
+      .panel.lane-v2prod .env-badge,
+      .panel.lane-searchprod .env-badge {
         background: var(--danger-soft);
         color: var(--danger);
         border-color: var(--danger-border);
@@ -409,6 +412,7 @@
           <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">v2 (stage)</button>
           <button type="button" class="lane-btn" role="tab" data-lane="v2prod" aria-selected="false">v2 (prod)</button>
           <button type="button" class="lane-btn" role="tab" data-lane="search" aria-selected="false">Search (Preview)</button>
+          <button type="button" class="lane-btn" role="tab" data-lane="searchprod" aria-selected="false">Search (Preview, prod)</button>
         </div>
         <p id="lane-note" class="lane-note"></p>
         <input
@@ -440,7 +444,8 @@
           v3: { version: "15.1.1", manifest: "manifest.plist",         apk: "dep-stage.apk" },
           v2: { version: "14.6.1", manifest: "dep-v2-manifest.plist", apk: "dep-v2-stage.apk" },
           prod: { version: "15.1.1", manifest: "dep-prod-manifest.plist", apk: "dep-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "dep-v2-prod-manifest.plist", apk: "dep-v2-prod-stage.apk" },
-          search: { version: "15.1.1", manifest: "dep-search-preview-manifest.plist", apk: "dep-stage-search-spike.apk" } },
+          search: { version: "15.1.1", manifest: "dep-search-preview-manifest.plist", apk: "dep-stage-search-spike.apk" },
+          searchprod: { version: "15.1.1", manifest: "dep-search-preview-prod-manifest.plist", apk: "dep-prod-search-spike.apk" } },
         { id: "pso",     name: "Bezzy Psoriasis",                 bundleId: "com.healthline.pso-stage",  icon: "pso-display-image.png",     scheme: "psohealthline",
           v3: { version: "15.1.1", manifest: "pso-manifest.plist",     apk: "pso-stage.apk" }, v2: { version: "14.6.1", manifest: "pso-v2-manifest.plist", apk: "pso-v2-stage.apk" },
           prod: { version: "15.1.1", manifest: "pso-prod-manifest.plist", apk: "pso-prod-stage.apk" }, v2prod: { version: "14.6.1", manifest: "pso-v2-prod-manifest.plist", apk: "pso-v2-prod-stage.apk" } },
@@ -508,7 +513,7 @@
           <div class="build-summary" aria-label="Build details">
             <div class="build-detail">
               <span class="label">Environment</span>
-              <strong class="${(lane === "prod" || lane === "v2prod") ? "lane-prod-env" : ""}">${esc(meta.env)}</strong>
+              <strong class="${(lane === "prod" || lane === "v2prod" || lane === "searchprod") ? "lane-prod-env" : ""}">${esc(meta.env)}</strong>
             </div>
             <div class="build-detail">
               <span class="label">Version</span>
@@ -686,6 +691,14 @@
           subtitle: "An early preview of in-app search over posts, members, and articles, on the internal test backend.",
           updated: "2026-07-12T19:47:44Z",
         },
+        searchprod: {
+          tab: "Search (Preview, prod)",
+          env: "Live community",
+          build: "Search preview · connects to your real community",
+          title: "Bezzy — Search preview (live community)",
+          subtitle: "⚠️ The search preview connected to your real community.",
+          updated: "2026-07-13T18:52:00Z",
+        },
       };
 
       const LANE_NOTES = {
@@ -694,6 +707,7 @@
         prod: "⚠️ This is the new app connected to your REAL community — posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot, so installing a different one replaces this.",
         v2prod: "⚠️ This is the current App Store app (pre-update) connected to your REAL community — this is what users who haven't updated are running. Posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot.",
         search: "An early preview of in-app search: search posts, members, and articles from the magnifying glass on the Home screen. Bezzy Depression only, on the internal test backend — safe to post, nothing reaches real members. Shares one install slot with the other lanes.",
+        searchprod: "⚠️ The search preview connected to your REAL community — posts, reactions, and edits are seen by real members. Search posts, members, and articles from the magnifying glass on the Home screen. Bezzy Depression only. For authorized testing only. Shares one install slot with the other lanes.",
       };
 
       function render() {
@@ -708,7 +722,7 @@
           : `<section class="panel"><p class="meta">No ${lane} builds published yet.</p></section>`;
         const missing = APPS.length - apps.length;
         const note = document.getElementById("lane-note");
-        note.classList.toggle("is-prod", lane === "prod" || lane === "v2prod");
+        note.classList.toggle("is-prod", lane === "prod" || lane === "v2prod" || lane === "searchprod");
         note.textContent =
           LANE_NOTES[lane] + (missing > 0 ? ` ${apps.length} of ${APPS.length} apps available.` : "");
         renderLastUpdated();
