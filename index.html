@@ -49,6 +49,8 @@
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
         line-height: 1.45;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
       }
 
       main {
@@ -74,53 +76,85 @@
       .page-header h1 {
         margin: 0 0 6px;
         font-size: clamp(1.6rem, 5vw, 2rem);
+        text-wrap: balance;
       }
 
       .page-header p {
         margin: 0;
         color: var(--muted);
+        text-wrap: pretty;
       }
 
-      .lane-toggle {
-        display: flex;
+      /* Two stacked segmented controls: pick a build, then an environment.
+         Splitting the two dimensions keeps each row short as builds are added,
+         and lets the environment row carry the live-community warning color. */
+      .lane-controls {
+        display: grid;
+        gap: 8px;
         margin: 16px auto 0;
-        max-width: 420px;
+        max-width: 460px;
+      }
+
+      .seg {
+        display: flex;
+        gap: 4px;
         padding: 4px;
         border: 1px solid var(--border);
-        border-radius: 999px;
+        border-radius: 14px;
         background: var(--soft);
       }
 
-      .lane-btn {
+      .seg-btn {
         flex: 1 1 0;
-        min-height: 44px;
-        padding: 4px 6px;
+        min-height: 40px;
+        padding: 6px 8px;
         border: 0;
-        border-radius: 999px;
+        border-radius: 10px; /* outer 14 − 4 padding, concentric */
         background: transparent;
         color: var(--muted);
-        font-size: 0.82rem;
-        font-weight: 700;
-        line-height: 1.15;
+        font-size: 0.85rem;
+        font-weight: 650;
+        line-height: 1.2;
         cursor: pointer;
+        text-wrap: balance;
+        transition:
+          background-color 0.18s ease,
+          color 0.18s ease,
+          box-shadow 0.18s ease;
       }
 
-      .lane-btn.is-active {
+      .seg-btn:hover:not(.is-active) {
+        color: var(--text);
+      }
+
+      .seg-btn.is-active {
+        background: var(--card);
+        color: var(--accent);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.12),
+          0 0 0 1px rgba(0, 0, 0, 0.04);
+      }
+
+      .seg-btn[data-env="stage"].is-active {
         background: var(--accent);
         color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
       }
 
-      .lane-note {
-        margin: 10px 0 0;
+      .seg-btn[data-env="prod"].is-active {
+        background: var(--danger-strong);
+        color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Scoped under .page-header so this beats `.page-header p { margin: 0 }`
+         — the note is a <p> in the header and would otherwise lose the margin. */
+      .page-header .lane-note {
+        margin: 12px 0 0; /* the filter below carries the matching bottom gap */
         min-height: 1.2em;
         color: var(--muted);
         font-size: 0.9rem;
-      }
-
-      .lane-btn[data-lane="prod"].is-active,
-      .lane-btn[data-lane="v2prod"].is-active,
-      .lane-btn[data-lane="searchprod"].is-active {
-        background: var(--danger-strong);
+        text-wrap: pretty;
       }
 
       .lane-note.is-prod {
@@ -163,7 +197,7 @@
 
       .filter {
         width: 100%;
-        margin-top: 14px;
+        margin-top: 12px; /* matches the note's top gap so the note sits evenly */
         padding: 12px 14px;
         border: 1px solid var(--border);
         border-radius: 8px;
@@ -230,6 +264,7 @@
         color: var(--text);
         font-size: 1rem;
         font-weight: 700;
+        font-variant-numeric: tabular-nums;
       }
 
       .platform-grid {
@@ -406,13 +441,16 @@
       <header class="page-header">
         <h1 id="page-title">Bezzy Installs</h1>
         <p id="page-subtitle">Builds for authorized internal testing.</p>
-        <div class="lane-toggle" role="tablist" aria-label="Build version">
-          <button type="button" class="lane-btn" role="tab" data-lane="v3" aria-selected="false">v3 (stage)</button>
-          <button type="button" class="lane-btn is-active" role="tab" data-lane="prod" aria-selected="true">v3 (prod)</button>
-          <button type="button" class="lane-btn" role="tab" data-lane="v2" aria-selected="false">v2 (stage)</button>
-          <button type="button" class="lane-btn" role="tab" data-lane="v2prod" aria-selected="false">v2 (prod)</button>
-          <button type="button" class="lane-btn" role="tab" data-lane="search" aria-selected="false">Search (Preview)</button>
-          <button type="button" class="lane-btn" role="tab" data-lane="searchprod" aria-selected="false">Search (Preview, prod)</button>
+        <div class="lane-controls">
+          <div class="seg" role="tablist" aria-label="Build">
+            <button type="button" class="seg-btn is-active" role="tab" data-build="v3" aria-selected="true">New app (v3)</button>
+            <button type="button" class="seg-btn" role="tab" data-build="v2" aria-selected="false">Legacy app (v2)</button>
+            <button type="button" class="seg-btn" role="tab" data-build="search" aria-selected="false">Search preview</button>
+          </div>
+          <div class="seg" role="tablist" aria-label="Backend">
+            <button type="button" class="seg-btn is-active" role="tab" data-env="stage" aria-selected="true">Stage</button>
+            <button type="button" class="seg-btn" role="tab" data-env="prod" aria-selected="false">Prod</button>
+          </div>
         </div>
         <p id="lane-note" class="lane-note"></p>
         <input
@@ -478,7 +516,51 @@
       // Active build lane; flipped by the lane toggle. Defaults to the v3
       // production lane — this page is primarily for guides installing the
       // v3 prod build to test against the live production backend.
-      let CURRENT_LANE = "prod";
+      // The six build lanes are a build × environment matrix. The UI picks the
+      // two dimensions separately; this maps them back to the lane id every
+      // other part of the page already keys on (LANE_META, app records, CSS).
+      let CURRENT_BUILD = "v3";
+      let CURRENT_ENV = "stage";
+      const LANE_ID = {
+        "v3|stage": "v3",
+        "v3|prod": "prod",
+        "v2|stage": "v2",
+        "v2|prod": "v2prod",
+        "search|stage": "search",
+        "search|prod": "searchprod",
+      };
+      const currentLane = () => LANE_ID[`${CURRENT_BUILD}|${CURRENT_ENV}`];
+
+      // Reflect the two toggles + the filter text in the URL so a lane can be
+      // linked directly (e.g. ?build=search&env=prod&q=migraine). Credentials
+      // are never in the URL — the basic-auth prompt handles those.
+      function readStateFromUrl() {
+        const p = new URLSearchParams(location.search);
+        if (["v3", "v2", "search"].includes(p.get("build"))) CURRENT_BUILD = p.get("build");
+        if (["stage", "prod"].includes(p.get("env"))) CURRENT_ENV = p.get("env");
+        return p.get("q") || "";
+      }
+      function syncSeg(attr, value) {
+        document.querySelectorAll(`.seg-btn[data-${attr}]`).forEach((b) => {
+          const on = b.dataset[attr] === value;
+          b.classList.toggle("is-active", on);
+          b.setAttribute("aria-selected", on ? "true" : "false");
+        });
+      }
+      function updateUrl() {
+        const params = new URLSearchParams(location.search);
+        params.set("build", CURRENT_BUILD);
+        params.set("env", CURRENT_ENV);
+        const q = (document.getElementById("app-filter").value || "").trim();
+        if (q) params.set("q", q);
+        else params.delete("q");
+        // Relative target avoids a SecurityError when the page was loaded via a
+        // credentialed URL (https://user:pass@host); replace, not push, so
+        // toggling doesn't stack history. Guarded so it can never break render.
+        try {
+          history.replaceState(null, "", `${location.pathname}?${params.toString()}`);
+        } catch (_) {}
+      }
 
       const BASE = "https://bezzy-stream-v3-app-install.netlify.app";
 
@@ -552,6 +634,7 @@
                 </ol>
                 <div class="instruction-notes">
                   <p>This site is behind a shared team login. Enter it once when the page loads; the install itself will not ask again.</p>
+                  <p>All builds share one install slot, so installing a different build replaces the current one.</p>
                   <p>The trust step is only needed the first time this enterprise developer is used on a device, and covers every Bezzy app on it.</p>
                   <p>iOS does not allow an OTA-installed app to open automatically.</p>
                 </div>
@@ -585,8 +668,8 @@
                 </ol>
                 <div class="instruction-notes">
                   <p>This site is behind a shared team login. Enter it once when the page loads; the download will not ask again.</p>
+                  <p>All builds share one install slot, so installing a different build replaces the current one.</p>
                   <p>Android may ask for install permission the first time a browser installs an APK.</p>
-                  <p>This build is for authorized internal testing only.</p>
                 </div>
               </details>
             </article>
@@ -654,101 +737,104 @@
       // the page header per lane.
       const LANE_META = {
         v3: {
-          tab: "v3 (stage)",
-          env: "Test",
-          build: "New app · internal test backend",
-          title: "Bezzy — New app (test)",
-          subtitle: "The new Bezzy app on the internal test backend.",
+          env: "Stage",
+          build: "New app (v3) · stage",
+          title: "Bezzy — New app (stage)",
           updated: "2026-06-26T19:20:57Z",
         },
         v2: {
-          tab: "v2 (stage)",
-          env: "Test",
-          build: "Current App Store app · internal test backend",
-          title: "Bezzy — Current app (test)",
-          subtitle: "The app currently live in the App Store, on the internal test backend.",
+          env: "Stage",
+          build: "Legacy app (v2) · stage",
+          title: "Bezzy — Legacy app (stage)",
           updated: "2026-06-06T15:14:00Z",
         },
         v2prod: {
-          tab: "v2 (prod)",
-          env: "Live community",
-          build: "Current App Store app · connects to your real community",
-          title: "Bezzy — Current app (live community)",
-          subtitle: "⚠️ The app currently live in the App Store, connected to your real community.",
+          env: "Prod",
+          build: "Legacy app (v2) · prod",
+          title: "Bezzy — Legacy app (prod)",
           updated: "2026-06-18T17:00:00Z",
         },
         prod: {
-          tab: "v3 (prod)",
-          env: "Live community",
-          build: "New app · connects to your real community",
-          title: "Bezzy — New app (live community)",
-          subtitle: "⚠️ The new app, connected to your real community.",
+          env: "Prod",
+          build: "New app (v3) · prod",
+          title: "Bezzy — New app (prod)",
           updated: "2026-06-23T17:20:00Z",
         },
         search: {
-          tab: "Search (Preview)",
-          env: "Test",
-          build: "Search preview · internal test backend",
-          title: "Bezzy — Search preview (test)",
-          subtitle: "An early preview of in-app search over posts, members, and articles, on the internal test backend.",
+          env: "Stage",
+          build: "Search preview · stage",
+          title: "Bezzy — Search preview (stage)",
           updated: "2026-07-12T19:47:44Z",
         },
         searchprod: {
-          tab: "Search (Preview, prod)",
-          env: "Live community",
-          build: "Search preview · connects to your real community",
-          title: "Bezzy — Search preview (live community)",
-          subtitle: "⚠️ The search preview connected to your real community.",
+          env: "Prod",
+          build: "Search preview · prod",
+          title: "Bezzy — Search preview (prod)",
           updated: "2026-07-13T18:52:00Z",
         },
       };
 
       const LANE_NOTES = {
-        v3: "The new app pointed at the internal test backend — safe to post, nothing reaches real members.",
-        v2: "The current App Store app pointed at the internal test backend — safe to post, nothing reaches real members. Shares one install slot with the other lanes.",
-        prod: "⚠️ This is the new app connected to your REAL community — posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot, so installing a different one replaces this.",
-        v2prod: "⚠️ This is the current App Store app (pre-update) connected to your REAL community — this is what users who haven't updated are running. Posts, reactions, and edits are seen by real members. For authorized testing only. All four builds share one install slot.",
-        search: "An early preview of in-app search: search posts, members, and articles from the magnifying glass on the Home screen. Bezzy Depression only, on the internal test backend — safe to post, nothing reaches real members. Shares one install slot with the other lanes.",
-        searchprod: "⚠️ The search preview connected to your REAL community — posts, reactions, and edits are seen by real members. Search posts, members, and articles from the magnifying glass on the Home screen. Bezzy Depression only. For authorized testing only. Shares one install slot with the other lanes.",
+        v3: "",
+        v2: "",
+        prod: "",
+        v2prod: "",
+        search: "In-app search rebuilt on the Stream API, replacing the deprecated Algolia search. Open it from the search icon in the header.",
+        searchprod: "⚠️ In-app search rebuilt on the Stream API, replacing the deprecated Algolia search. Open it from the search icon in the header.",
       };
 
       function render() {
-        const lane = CURRENT_LANE;
+        const lane = currentLane();
         const meta = LANE_META[lane];
         document.getElementById("page-title").textContent = meta.title;
-        document.getElementById("page-subtitle").textContent = meta.subtitle;
         const apps = APPS.filter((a) => a[lane]);
         const list = document.getElementById("app-list");
         list.innerHTML = apps.length
           ? apps.map((a) => appPanel(a, lane)).join("")
           : `<section class="panel"><p class="meta">No ${lane} builds published yet.</p></section>`;
-        const missing = APPS.length - apps.length;
         const note = document.getElementById("lane-note");
-        note.classList.toggle("is-prod", lane === "prod" || lane === "v2prod" || lane === "searchprod");
-        note.textContent =
-          LANE_NOTES[lane] + (missing > 0 ? ` ${apps.length} of ${APPS.length} apps available.` : "");
+        const noteText = (LANE_NOTES[lane] || "").trim();
+        note.textContent = noteText;
+        note.hidden = noteText === ""; // collapse it entirely when a lane has no note
+        note.classList.toggle(
+          "is-prod",
+          !note.hidden && (lane === "prod" || lane === "v2prod" || lane === "searchprod"),
+        );
         renderLastUpdated();
         markRecommendedPlatform();
         applyFilter(document.getElementById("app-filter").value || "");
       }
 
-      document.querySelectorAll(".lane-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          CURRENT_LANE = btn.dataset.lane;
-          document.querySelectorAll(".lane-btn").forEach((b) => {
-            const on = b === btn;
-            b.classList.toggle("is-active", on);
-            b.setAttribute("aria-selected", on ? "true" : "false");
+      function wireSeg(attr, apply) {
+        document.querySelectorAll(`.seg-btn[data-${attr}]`).forEach((btn) => {
+          btn.addEventListener("click", () => {
+            apply(btn.dataset[attr]);
+            btn.parentElement.querySelectorAll(".seg-btn").forEach((b) => {
+              const on = b === btn;
+              b.classList.toggle("is-active", on);
+              b.setAttribute("aria-selected", on ? "true" : "false");
+            });
+            render();
+            updateUrl();
           });
-          render();
         });
-      });
+      }
+      wireSeg("build", (v) => (CURRENT_BUILD = v));
+      wireSeg("env", (v) => (CURRENT_ENV = v));
+
+      const initialQuery = readStateFromUrl();
+      syncSeg("build", CURRENT_BUILD);
+      syncSeg("env", CURRENT_ENV);
+      const filterInput = document.getElementById("app-filter");
+      filterInput.value = initialQuery;
+      updateUrl();
 
       render();
       window.setInterval(renderLastUpdated, 30 * 1000);
-      document
-        .getElementById("app-filter")
-        .addEventListener("input", (e) => applyFilter(e.target.value));
+      filterInput.addEventListener("input", (e) => {
+        applyFilter(e.target.value);
+        updateUrl();
+      });
     </script>
   </body>
 </html>
